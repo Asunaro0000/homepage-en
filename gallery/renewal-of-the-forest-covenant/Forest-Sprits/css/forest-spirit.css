@@ -1,0 +1,359 @@
+/* ================================
+   Base
+================================ */
+
+:root {
+  --bg-light-level: 1;
+  --bg-shift: 0px;
+  --fg-max-width: 1080px;
+  --fg-padding-x: 16px;
+  --fg-card-radius: 18px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Yu Gothic",
+    "Hiragino Sans", sans-serif;
+  color: #f7f3ea;
+  background: radial-gradient(circle at top, #202630 0, #070a0f 55%, #050609 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ================================
+   背景の奥の森レイヤー (3)
+================================ */
+
+.forest-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background-repeat: no-repeat;
+
+  /* 横を常に画面いっぱいにする */
+  background-size: 100% auto;  
+  background-position: center 100%;  /* 下からスタート */
+
+  opacity: 0.42;
+  mix-blend-mode: normal;
+  transition: background-image 1.2s ease-out;
+}
+
+
+
+/* 背景をゆっくり上送りする */
+@keyframes forestScrollUp {
+  0% {
+    background-position: center 100%;  /* 画像の下側を表示 */
+  }
+  100% {
+    background-position: center 0%;    /* 画像の上側までゆっくり送る */
+  }
+}
+
+
+
+/* ================================
+   Layout
+================================ */
+
+.fg-wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: var(--fg-max-width);
+  margin: 0 auto;
+  padding: 32px var(--fg-padding-x) 64px;
+}
+
+.fg-section {
+  padding: 40px 0;
+}
+
+/* 入口セクション */
+.fg-intro {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.fg-intro-inner {
+  max-width: 640px;
+}
+
+.fg-title {
+  font-size: clamp(2.2rem, 4vw, 2.8rem);
+  margin: 0 0 16px;
+  letter-spacing: 0.08em;
+}
+
+.fg-lead {
+  font-size: 18px;
+  line-height: 1.8;
+  margin: 0 0 8px;
+}
+
+.fg-lead-sub {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* セクションの見出し */
+.fg-section-title {
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 24px;
+  position: relative;
+}
+
+.fg-section-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 72px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ffc973, #fff3c7);
+}
+
+/* ================================
+   ギャラリーグリッド
+================================ */
+
+.fg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  row-gap: 60px;        /* 上下の隙間：ここを増やす */
+  column-gap: 24px;     /* 左右は現状維持 */
+}
+
+
+/* 2. カードホバーで光がにじむ */
+.fg-card {
+  display: block;
+  position: relative;
+  border-radius: var(--fg-card-radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+
+  /* 背景の森がうっすら透けるように */
+  background: rgba(7, 10, 16, 0.75);
+  backdrop-filter: blur(4px);
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.58);
+  transform: translateY(0);
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: zoom-in;
+}
+
+
+.fg-figure {
+  margin: 0;
+  position: relative;
+}
+
+.fg-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scale(1.02);
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 光の縁取り */
+.fg-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at top, rgba(255, 237, 188, 0.45), transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease-out;
+}
+
+.fg-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 26px rgba(255, 220, 150, 0.36);
+}
+
+.fg-card:hover::before {
+  opacity: 1;
+}
+
+.fg-card:hover img {
+  transform: scale(1.06);
+}
+
+.fg-caption {
+  padding: 12px 16px 14px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  background: linear-gradient(to bottom, rgba(4, 7, 12, 0), rgba(4, 7, 12, 0.88));
+}
+
+/* ================================
+   Lore section
+================================ */
+
+.fg-lore {
+  max-width: 720px;
+}
+
+.fg-text {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  margin: 0 0 12px;
+  opacity: 0.9;
+}
+
+/* ================================
+   Responsiveness
+================================ */
+
+@media (max-width: 640px) {
+  .fg-wrapper {
+    padding-top: 24px;
+  }
+  .fg-intro {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}
+/* ================================
+   Lightbox
+================================ */
+
+.fg-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  /* 完全な真っ黒じゃなく、森の背景が透けて見える */
+  background: rgba(3, 5, 10, 0.72);
+}
+
+.fg-lightbox.is-open {
+  display: flex;
+}
+
+.fg-lightbox-inner {
+  position: relative;
+  max-width: min(80vw, 720px);
+  width: 100%;
+  padding: 16px 20px 18px;
+  border-radius: 22px;
+
+  /* ここも少し透け＋ぼかしで“ガラスケース”感 */
+  background: rgba(6, 9, 14, 0.8);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+}
+
+.fg-lightbox-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  border: none;
+  background: transparent;
+  color: #f5f3ea;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.fg-lightbox-figure {
+  margin: 0;
+}
+
+#fg-lightbox-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+}
+
+#fg-lightbox-caption {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+@media (max-width: 640px) {
+  .fg-wrapper {
+    padding-top: 24px;
+  }
+
+  .fg-intro {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  /* ▼ スマホではカード2列固定 ▼ */
+  .fg-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 32px;      /* スマホ用の上下ギャップ */
+    column-gap: 16px;   /* スマホ用の左右ギャップ */
+  }
+}
+.fg-gallery-head {
+  position: relative;      /* ★ ここを追加 */
+  margin-bottom: 24px;
+  /* display:flex; は一旦外してOK（下でスマホ用に指定） */
+}
+/* PC向け配置（768px以上） */
+ .bgm-toggle {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 247, 220, 0.4);
+    background: rgba(8, 12, 18, 0.72);
+    color: #f7f3e8;
+    font-size: 14px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+ }
+@media (min-width: 768px) {
+  .bgm-toggle {
+    position: absolute;
+    top: 3px;      /* 見出しの少し上あたり */
+    left: 950px;    /* ★ 赤丸の横位置。好みで 240〜300 くらい調整してOK */
+
+  }
+
+  .bgm-toggle.is-on {
+    background: rgba(255, 214, 140, 0.9);
+    color: #2b200b;
+    border-color: rgba(255, 235, 200, 0.8);
+  }
+}
+/* スマホでは素直にタイトル横／右寄せに並べる */
+@media (max-width: 767px) {
+  .fg-gallery-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bgm-toggle {
+    position: static;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+}

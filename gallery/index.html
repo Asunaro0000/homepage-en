@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ja">
+  
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gallery | Asunaro Works</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1NCR09VMKR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1NCR09VMKR');
+    </script>
+
+    <!-- ギャラリー専用CSS（同階層） -->
+    <link rel="stylesheet" href="../css/header.css"> 
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/gallery.css">
+    <style>
+
+</style>
+    <!-- データローダ（js-yaml + 自前ローダ） -->
+    <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+    <script type="module">
+      import { loadYAML } from "../js/util/yaml-loader.js"; // ※サイト構成に合わせてここだけ調整可
+
+      const $  = (s, r=document) => r.querySelector(s);
+      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+      /** =========================
+       *  汎用スライダー（1コンテナ=1スライダー）
+       *  - Hero画像はリンク可（<a>でラップ）
+       *  - 下段サムネをクリックで切替
+       *  - 左右ナビ／ドラッグで移動
+       * ========================= */
+      function createSlider(container, slides = []) {
+        container.innerHTML = `
+          <div class="sld">
+            <button class="sld__nav sld__prev" aria-label="Previous">‹</button>
+            <div class="sld__viewport" aria-roledescription="carousel">
+              <div class="sld__track"></div>
+            </div>
+            <button class="sld__nav sld__next" aria-label="Next">›</button>
+
+            <div class="sld__meta">
+              <h3 class="sld__title"></h3>
+              <div class="sld__dots" role="tablist" aria-label="Slides"></div>
+            </div>
+          </div>
+          <div class="sld__thumbs"></div>
+        `;
+
+        const el = {
+          track:  container.querySelector(".sld__track"),
+          prev:   container.querySelector(".sld__prev"),
+          next:   container.querySelector(".sld__next"),
+          dots:   container.querySelector(".sld__dots"),
+          thumbs: container.querySelector(".sld__thumbs"),
+          title:  container.querySelector(".sld__title"),
+        };
+
+        // スライドDOM（リンクあり/なし両対応）
+        el.track.innerHTML = slides.map(s => `
+          <div class="sld__slide">
+            ${s.href ? `<a class="sld__link" href="${s.href}">` : `<span class="sld__link">`}
+              <img src="${s.src}" alt="${s.title ?? ""}" loading="eager">
+            ${s.href ? `</a>` : `</span>`}
+          </div>
+        `).join("");
+
+        // ドット＆サムネ
+        el.dots.innerHTML = slides.map((_, i) => `<button class="sld__dot" data-i="${i}" aria-label="Go to slide ${i+1}"></button>`).join("");
+        el.thumbs.innerHTML = slides.map((s, i) => `
+          <button class="sld__th" data-i="${i}" aria-label="Preview ${i+1}">
+            <img src="${s.thumb || s.src}" alt="">
+          </button>
+        `).join("");
+
+        // 状態
+        let idx = 0;
+        const n = slides.length;
+
+        function update(i) {
+          if (!n) return;
+          idx = (i + n) % n;
+          el.track.style.transform = `translateX(${-100 * idx}%)`;
+          $$(".sld__dot", el.dots).forEach((d, k) => d.classList.toggle("active", k === idx));
+          $$(".sld__th",  el.thumbs).forEach((t, k) => t.classList.toggle("active", k === idx));
+          el.title.textContent = slides[idx]?.title || "";
+        }
+
+        // イベント
+        el.prev.addEventListener("click", () => update(idx - 1));
+        el.next.addEventListener("click", () => update(idx + 1));
+        el.dots.addEventListener("click", (e) => {
+          const b = e.target.closest(".sld__dot"); if (!b) return;
+          update(parseInt(b.dataset.i, 10));
+        });
+        el.thumbs.addEventListener("click", (e) => {
+          const b = e.target.closest(".sld__th"); if (!b) return;
+          update(parseInt(b.dataset.i, 10));
+        });
+
+        // ドラッグ/スワイプ（リンク上はドラッグにしない）
+        let sx = null;
+        let downAnchor = null;
+        el.track.addEventListener("pointerdown", (e) => {
+          downAnchor = e.target.closest("a");      // ← クリック先がリンクかどうか
+          sx = e.clientX;
+          // リンク上では pointer capture を取らない＝通常のクリックを通す
+          if (!downAnchor) el.track.setPointerCapture(e.pointerId);
+        });
+        el.track.addEventListener("pointerup", (e) => {
+          if (sx === null) return;
+          const dx = e.clientX - sx;
+          // ドラッグ閾値：リンク以外で大きく動いたらスライド
+          if (!downAnchor && Math.abs(dx) > 40) {
+            update(idx + (dx < 0 ? 1 : -1));
+          } else if (downAnchor && Math.abs(dx) < 6) {
+            // 小さな動き＝クリックとしてリンクへ遷移
+            downAnchor.click();
+          }
+          sx = null;
+          downAnchor = null;
+        });
+
+        update(0);
+        return { update };
+      }
+
+      /** =========================
+       *  初期化（YAML読込→描画）
+       *  - YAMLは gallery/index.html と同階層の ./gallery.yaml
+       *  - 画像は ./hero01.webp, ./season/autumn/... を想定
+       * ========================= */
+      async function init() {
+        const data = await loadYAML("../data/gallery.yaml");
+
+        /* ===== 上段：ゲーム（各ゲーム=1スライダー） ===== */
+        const games = Array.isArray(data?.games) ? data.games : [];
+        const gamesWrap = $("#games");
+        gamesWrap.innerHTML = games.map((g, gi) => `
+          <article class="g-game">
+            <header class="g-game__head">
+              <h2 class="g-game__title">${g.title || ""}</h2>
+              ${g.subtitle ? `<p class="g-game__subtitle">${g.subtitle}</p>` : ""}
+            </header>
+            <div class="sld-wrap" id="game-sld-${gi}"></div>
+          </article>
+        `).join("");
+
+        games.forEach((g, gi) => {
+          const slides = (g.slides || []).map(s => ({
+            src:   s.src,                                   // 例: ./hero01.webp
+            thumb: s.thumb || s.src,                        // 例: ./thumb01.webp
+            href:  s.href || g.cta?.href || `./${g.id}/`,   // 相対リンク（./prismcat/ など）
+            title: s.title || g.title
+          }));
+          const mount = document.getElementById(`game-sld-${gi}`);
+
+          // スライド未定時のフォールバック（cover/hero があれば使う）
+          const fallback = slides.length ? slides : [{
+            src:   g.cover || g.hero || "",
+            thumb: g.cover || g.hero || "",
+            href:  g.cta?.href || `./${g.id}/`,
+            title: g.title || ""
+          }];
+
+          createSlider(mount, fallback);
+        });
+
+        if (!games.length) {
+          gamesWrap.innerHTML = `<p class="g-empty">ゲームの展示は準備中です。</p>`;
+        }
+
+/* ===== 下段：季節展示（各展示=1スライダー） ===== */
+const exhibits = Array.isArray(data?.exhibits)
+  ? data.exhibits
+  : Array.isArray(data?.gallery) ? data.gallery : [];
+const exWrap = $("#exhibits");
+exWrap.innerHTML = exhibits.map((x, xi) => `
+  <section class="g-exhibit">
+    <h3 class="g-exhibit__title">${x.title || ""}</h3>
+    <div class="sld-wrap" id="ex-sld-${xi}"></div>
+  </section>
+`).join("");
+
+exhibits.forEach((x, xi) => {
+  const slidesSrc = (x.slides && x.slides.length)
+    ? x.slides
+    : (x.cover ? [{ src: x.cover, title: x.title }] : []);
+
+  const slides = slidesSrc.map((s, i) => {
+    // ★ 1枚目と2枚目のスライドにそれぞれ指定リンクを設定
+    const href =
+      (i === 0)
+        ? "../gallery/Usako_and_Kameko/"
+      : (i === 1)
+        ? "../gallery/renewal-of-the-forest-covenant/"
+      : (i === 2)
+        ? "../gallery/Risko/"
+      : (i === 3)
+        ? "../gallery/lili_and_kaede/" 
+      : (s.href ?? x?.cta?.href ?? (x?.id ? `./${x.id}/` : null));
+      
+    return {
+      src:   s.src,
+      thumb: s.thumb || s.src,
+      href,     // ← ここでクリックリンクを適用
+      title: s.title || x.title,
+    };
+  });
+
+  const mount = document.getElementById(`ex-sld-${xi}`);
+  createSlider(mount, slides);
+});
+
+
+if (!exhibits.length) {
+  exWrap.innerHTML = `<p class="g-empty">季節展示は準備中です。</p>`;
+}
+
+}
+      init().catch(err => {
+        console.error(err);
+        const el = document.getElementById("games");
+        if (el) el.innerHTML = `<p class="g-error">読み込みに失敗しました。</p>`;
+      });
+    </script>
+  </head>
+
+  <body data-page="gallery">
+  <header class="nav">
+    <a class="brand" href="../">Asunaro Works</a>
+    <nav>
+      <a href="../gallery/">Gallery</a>
+      <a href="../about/">About</a>
+      <a href="../process/">Process</a>
+      <a href="../contact/">Contact</a>
+      <a href="../link/">Link</a>
+      <a href="../sitemap/">Sitemap</a>
+    </nav>
+  </header>
+
+
+
+    <main class="g-wrap">
+      <!-- 上段：ゲーム（面を積み増し・各面はスライダー） -->
+      <section class="g-block">
+        <h1 class="g-block__title">《 Games 》</h1>
+       <p class="g-block__lead">ゲームの展示。画像クリックでリンク先へ。</p> 
+        <div id="games" class="g-stack"></div>
+      </section>
+
+      <!-- 下段：季節展示（各展示はスライダー） -->
+      <section class="g-block">
+        <h2 class="g-block__title">Works — ストーリーボード</h2>
+        <p class="g-block__lead">物語の流れに沿って構成されたビジュアルワーク。シーンごとの空気、光、そして感情の変化を順に追ってご覧ください。</p>
+        <div id="exhibits" class="g-stack"></div>
+      </section>
+    </main>
+
+    <footer>© 2025 Asunaro Works. All rights reserved.</footer>
+    <script type="module" src="../js/extensions/nav-toggle.js"></script>
+  </body>
+</html>

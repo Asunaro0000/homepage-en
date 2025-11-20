@@ -1,0 +1,468 @@
+/* =============================================================================
+  Asunaro Works — Base Styles
+  - 変数・ベース
+  - タイポグラフィ / 汎用
+  - ヘッダー（共通）
+  - セクション / ヒーロー
+  - カード
+  - 図版 / バッジ / 補助
+  - スライダー（共通UI）
+  - フッター
+============================================================================= */
+
+/* ========== 変数 / ベース =================================================== */
+:root {
+  --bg: #0e0f12;
+  --fg: #f5f6f7;
+  --muted: #aab;
+  --accent: #9dd5ff;
+  --border: rgba(255,255,255,.12);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Noto Sans JP', system-ui, -apple-system, Segoe UI, Roboto,
+               Helvetica, Arial, sans-serif;
+  line-height: 1.75;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a {
+  color: var(--fg);
+  text-decoration: none;
+  transition: opacity .15s ease;
+}
+a:hover { opacity: .9; }
+
+/* ========== タイポグラフィ / 汎用 ========================================== */
+.muted { color: var(--muted); }
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 999px;
+}
+
+/* ========== ヘッダー（全ページ共通） ======================================= */
+.nav {
+  position: sticky;
+  /*top: 0;*/
+  z-index: 10;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 18px;
+  background: rgba(14,15,18,.6);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav .brand {
+  font-weight: 800;
+  letter-spacing: .02em;
+  font-size: clamp(18px, 2.2vw, 24px);
+}
+
+.nav nav {
+  display: flex;
+  gap: 12px;
+}
+
+.nav nav a {
+  margin: 0 4px;
+  font-weight: 600;
+  font-size: clamp(14px, 1.6vw, 18px);
+  opacity: .95;
+}
+.nav nav a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ========== セクション / ヒーロー ========================================== */
+.section {
+  max-width: 1024px;
+  margin: 36px auto;
+  padding: 0 18px;
+}
+
+.hero {
+  padding: 30px 18px 0px;
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.hero .lead {
+  opacity: .85;
+  margin-top: -6px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 20px;
+  font-weight: 600;
+
+  background: var(--accent);
+  color: #0e0f12;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+/* ========== カード ========================================================== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform .15s ease, background .2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.06);
+}
+
+.card .body { padding: 12px 14px; }
+
+.card h3 {
+  margin: 6px 0 4px;
+  font-size: 18px;
+}
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ========== 図版 / 補助 ==================================================== */
+.figure {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 8px 0 16px;
+}
+.figure img { width: 100%; }
+
+/* ========== スライダー（共通UI） ========================================== */
+/* ヘッダー統一に合わせ、コンポーネントのみ定義（ページ間で使い回し可能） */
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 6px;
+}
+
+.thumbs {
+  display: flex;
+  gap: 8px;
+  overflow: auto;
+  padding: 8px 0;
+}
+.thumbs .th {
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: .8;
+}
+.thumbs .th.active {
+  outline: 2px solid var(--accent);
+  opacity: 1;
+}
+.thumbs img {
+  display: block;
+  height: 72px;
+  border-radius: 8px;
+}
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  margin-top: 6px;
+
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.slider .track {
+  display: flex;
+  transition: transform .4s ease;
+  will-change: transform;
+}
+.slider .slide {
+  position: relative;
+  min-width: 100%;
+}
+.slider .slide img { width: 100%; }
+
+.slider .legend {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(0,0,0,.45);
+}
+.slider .legend h3 {
+  margin: 0 0 2px;
+  font-size: 16px;
+}
+.slider .legend p {
+  margin: 0;
+  font-size: 16px;
+  color: #cfd3dc;
+}
+
+.slider .nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 999px;
+
+  font-size: 28px;
+  color: #fff;
+  background: rgba(0,0,0,.5);
+  cursor: pointer;
+}
+.slider .prev { left: 8px; }
+.slider .next { right: 8px; }
+
+.slider .dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 10px;
+}
+.slider .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid #fff;
+  background: transparent;
+  opacity: .6;
+  cursor: pointer;
+}
+.slider .dot.active {
+  background: #fff;
+  opacity: 1;
+}
+
+/* ========== フッター ======================================================== */
+footer {
+  margin-top: 48px;
+  padding: 22px 16px;
+
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+
+  border-top: 1px solid var(--border);
+}
+
+/* Phase-1：キャプション強制上書き（!important 版） */
+body[data-page="phase-1"] figcaption,
+body[data-page="phase-1"] [class*="caption"],
+body[data-page="phase-1"] .slide-caption,
+body[data-page="phase-1"] .scene-caption,
+body[data-page="phase-1"] .kv-caption {
+  font-size: 30px !important;   /* ←お好みで数値変更 */
+  line-height: 1.6 !important;
+}
+
+/* タイトル行が別要素の場合（任意） */
+body[data-page="phase-1"] .caption-title,
+body[data-page="phase-1"] .scene-title {
+  font-size: 50px !important;
+  font-weight: 700 !important;
+}
+
+/* 余白や配置を触りたい場合（任意） */
+body[data-page="phase-1"] [class*="caption"] {
+  padding: 20px 20px !important;
+}
+
+
+
+/* ==============================
+   📱 Mobile Only Adjustments
+   asunaro_hp / 2025-10-13
+   ============================== */
+
+@media (max-width: 768px) {
+  /* ギャラリー説明テキスト */
+    .slider .legend h3 {
+    margin: 0 0 2px;
+    font-size: 10px;
+    }
+
+  .slider .legend p {
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    margin: 0 8px !important;
+  }
+
+
+  /* サムネイル画像（下段の小さい絵） */
+  .thumbs img {
+    height: 36px !important;   /* 元72px → 少し小さく */
+    border-radius: 6px !important;
+  }
+
+  /* もし横幅に詰まるようなら */
+  .thumbs {
+    gap: 4px !important;
+  }
+
+  /* その他スマホ用共通微調整（必要なら追加） */
+  .gallery-card img,
+  .carousel-item img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+  
+}
+/* スマホではさらに小さく */
+@media (max-width: 768px) {
+  #series-hero h1 {
+    font-size: 1.2rem; /* 19px前後 */
+  }
+}
+
+/* ===== お知らせ欄 ===== */
+.news {
+  margin-top: 48px;
+  padding: 24px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: left;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.news h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.news ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.news li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  font-size: 15px;
+}
+
+.news li:last-child {
+  border-bottom: none;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+/* フッター固定レイアウト */
+body {
+  background: linear-gradient(180deg, #856a51 0%, #13271d 100%);
+  color: #eee;
+}
+
+/* ===== サイトマップ（Forest Map）セクション ===== */
+.sitemap-section {
+  max-width: 800px;
+  margin: 32px auto 0;
+  padding: 22px 26px;
+  background: rgba(0, 0, 0, .35);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  text-align: center;
+  box-shadow: 0 0 18px rgba(0,0,0,.35);
+}
+
+.sitemap-section h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.sitemap-text {
+  margin: 0 0 16px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.sitemap-btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: #ffd86a;
+  color: #222;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,.35);
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    background .15s ease;
+}
+
+.sitemap-btn:hover {
+  transform: translateY(-1px);
+  background: #ffe38f;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45);
+}
+
+/* モバイル調整 */
+@media (max-width: 768px) {
+  .sitemap-section {
+    margin-top: 28px;
+    padding: 18px 16px;
+  }
+
+  .sitemap-text {
+    font-size: 13px;
+  }
+
+  .sitemap-btn {
+    width: 100%;
+    max-width: 260px;
+  }
+}

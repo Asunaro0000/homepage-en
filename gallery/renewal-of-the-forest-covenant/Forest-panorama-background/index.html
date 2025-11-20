@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+  <audio id="bgmAudio" preload="none"></audio>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>森の営み | Asunaro Works</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1NCR09VMKR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1NCR09VMKR');
+  </script>
+
+  <!-- site header（共通CSS） -->
+  <link rel="stylesheet" href="../../../css/header.css">
+  <link rel="stylesheet" href="../../../css/style.css">
+
+  <!-- パノラマ専用CSS -->
+  <link rel="stylesheet" href="./css/panorama.css">
+  
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="../../../">Asunaro Works</a>
+    <nav aria-label="Primary">
+      <a href="../../../gallery/">Gallery</a>
+      <a href="../../../about/">About</a>
+      <a href="../../../process/">Process</a>
+      <a href="../../../contact/">Contact</a>
+      <a href="../../../link/">Link</a>
+      <a href="../../../sitemap/">Sitemap</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="room-head">
+      <div class="room-head-text">
+        <h1>森の営み</h1>
+        <p class="lead">
+          森の形や光の流れ、倒木・切り株・祠などの要素を横に並べて整理した資料展示です。<br>
+          背景制作や世界観設計のために、森の一連の景観が確認できます。
+          
+        </p>
+      </div>
+
+      <!-- ☆ BGMボタンをここに移動 ☆ -->
+      <button id="bgmToggle" class="pano-bgm-btn">
+        BGM: OFF
+      </button>
+    </div>
+
+<section class="panorama-wrap">
+
+
+  <div class="panorama" id="panorama" aria-label="Risuko nature walk panorama">
+    <!-- panorama.js が画像を挿入 -->
+  </div>
+
+  <!-- ★ 進行ランプ -->
+  <div class="pano-progress" aria-hidden="true">
+    <span class="pano-progress-dot" data-step="1"></span>
+    <span class="pano-progress-dot" data-step="2"></span>
+    <span class="pano-progress-dot" data-step="3"></span>
+  </div>
+</section>
+
+  <!-- キャプション -->
+  <div class="pano-caption-block">
+    <h2 id="panoTitle"></h2>
+    <p id="panoText">
+      
+    </p>
+  </div>
+
+  <!-- サムネイル群 -->
+  <div class="pano-thumbs" id="panoThumbs" aria-label="パノラマのセット選択">
+    <!-- panorama.js がサムネイルボタンを自動生成 -->
+  </div>
+</section>
+
+
+  <!-- BGM（パスは環境に合わせて変更） -->
+  <audio id="bgmAudio" preload="auto" loop></audio>
+
+  <footer>© 2025 Asunaro Works.</footer>
+
+  <!-- パノラマ生成＆ドラッグ処理 -->
+  <script src="./js/panorama.js"></script>
+  <script src="./js/bgm.js"></script>
+
+  <script type="module" src="../../../js/extensions/nav-toggle.js"></script>
+  <audio id="bgmAudio" preload="none"></audio>
+
+</body>
+</html>

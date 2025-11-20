@@ -1,0 +1,238 @@
+/* ===========================
+   レイアウト・タイポ
+   =========================== */
+
+.pano-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.pano-container h1 {
+  font-size: 1.6rem;
+  margin: 10px 0 4px;
+}
+
+.pano-lead {
+  margin: 0 0 12px;
+  line-height: 1.6;
+  opacity: .9;
+}
+
+/* ===========================
+   タブ
+   =========================== */
+
+.pano-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.pano-tab {
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  cursor: pointer;
+}
+
+.pano-tab.is-active {
+  background: #ffffff;
+  color: #333;
+}
+
+/* ===========================
+   パノラマ本体
+   =========================== */
+
+.panorama-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+background: linear-gradient(
+  90deg,
+  #ff6a00 0%,
+  #ff9500 25%,
+  #ffc400 50%,
+  #ff9500 75%,
+  #ff6a00 100%
+);
+
+  padding: 8px 0;
+}
+
+.panorama {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* PC用 細いスクロールバー */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(39, 143, 212, 0.678) rgba(255, 255, 255, 0);
+}
+
+/* Chrome / Edge / Safari */
+.panorama::-webkit-scrollbar {
+  height: 6px;
+}
+.panorama::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0);
+}
+.panorama::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+}
+.panorama:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* 画像 */
+.panorama img {
+  display: block;
+  height: auto;
+  width: auto;
+  max-height: 70vh;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* 画像間の隙間（時間軸の区切り） */
+.panorama img + img {
+  margin-left: 10px;
+}
+
+/* スマホ：スクロールバー非表示 */
+@media (max-width: 768px) {
+  .panorama {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .panorama::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* スマホ横向き：高さ制限を少し緩める */
+@media screen and (max-width: 900px) and (orientation: landscape) {
+  .panorama img {
+    max-height: 80vh;
+    object-fit: contain;
+  }
+
+  .panorama {
+    align-items: center;
+  }
+}
+
+/* ===========================
+   ガイドボタン＋BGMボタン
+   =========================== */
+
+.pano-goto {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ストーリーボードボタン */
+.pano-goto__btn {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: #ffcc66;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  border: 2px solid rgba(255, 240, 190, 0.95);
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.35),
+    0 0 12px rgba(255, 220, 120, 0.9);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.2s ease;
+}
+
+/* 最後まで行くまで無効 */
+.pano-disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pano-goto__btn:not(.pano-disabled):hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.45),
+    0 0 20px rgba(255, 230, 150, 1);
+}
+
+/* BGMボタン */
+.pano-bgm-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+/* ON状態 */
+.pano-bgm-btn.is-on {
+  background: rgba(60, 160, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.pano-bgm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 768px) {
+  .pano-goto__btn {
+    font-size: 14px;
+    padding: 10px 24px;
+  }
+  .pano-bgm-btn {
+    font-size: 13px;
+    padding: 8px 18px;
+  }
+}
+
+/* BGMボタン周り */
+.pano-bgm {
+  max-width: 960px;
+  margin: 0.5rem auto 0;
+  text-align: right;
+}
+
+.pano-bgm-btn {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.pano-bgm-btn:hover {
+  transform: translateY(-1px);
+}
+
+.pano-bgm-btn.is-on {
+  background: #ff9800;
+  color: #000;
+}

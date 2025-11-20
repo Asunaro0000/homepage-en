@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "gallery/Risko/risuko_room"
+    },
+    {
+      "path": "gallery/lili_and_kaede"
+    },
+    {
+      "path": "gallery/renewal-of-the-forest-covenant"
+    }
+  ],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "asunaro_hp"
+  }
+}

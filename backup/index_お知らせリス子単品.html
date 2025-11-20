@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <!-- GitHub Pages（プロジェクトサイト）用：必ず最初に置く -->
+  <!-- <base href="/asunaro0000.homepage/">-->
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asunaro Works</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1NCR09VMKR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1NCR09VMKR');
+  </script>
+
+  <!-- アセットは相対パスでOK -->
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/risuko-stamp.css">
+  <link rel="stylesheet" href="./css/risuko-stamp2.css">
+  
+  <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+
+</head>
+
+<body>
+  <header class="nav">
+    <!-- 先頭スラッシュをやめ、サイトルート（=baseの位置）相対に -->
+    <a class="brand" href="./">Asunaro Works</a>
+    <nav>
+      <a href="gallery/">Gallery</a>
+      <a href="about/">About</a>
+      <a href="process/">Process</a>
+      <a href="contact/">Contact</a>
+      <a href="link/">Link</a>
+    </nav>
+  </header>
+
+  <main class="section">
+    <section class="hero">
+      <h1>絵にコードを添える。</h1>
+      <p class="lead">―― 光と仕組みの交差点から ――</p>
+      <p><a class="btn" href="gallery/">作品を見る</a></p>
+    </section>
+  </main>
+    <section class="risuko"></section>
+    <div class="risuko-wrap">
+      <div id="risuko-stamp" class="risuko-stamp" aria-live="polite">
+        <img id="risuko-stamp-img" src="" alt="Risuko of the day">
+        <p id="risuko-stamp-text" class="risuko-caption"></p>
+        <button id="risuko-stamp-btn" class="risuko-btn" type="button" aria-label="スタンプを切り替える">tap to change</button>
+      </div>
+    </div>
+  </section>
+  <section class="news">
+    <h2>お知らせ</h2>
+    <ul>
+      <li><strong>2025-11-11：</strong> リス子の小屋のストーリーボード、ブラウザ版を追加。BGM+動画追加。</li>
+      <li><strong>2025-11-9：</strong> トップに「リス子スタンプ」登場。クリックすると表情が変わります🐿️</li>
+      <li><strong>2025-11-9：</strong> ウサ子とカメコ、森の契約更新譚のページに作品ページを開くのボタンを追加。　　　　　　　　　　　　html閲覧対応、BGM追加、森の契約更新譚の動画追加</li>       
+      <li><strong>2025-11-3：</strong> Galleryの「季節展示」をストーリーボード形式に刷新しました。</li>
+      <li><strong>2025-11-3：</strong> 『PrismCat Memory — 記憶の光譜』のアルバム挙動を安定化しました。</li>
+    </ul>
+  </section>
+  
+
+
+  <footer>
+    <span>© 2025 Asunaro Works. All rights reserved.</span>
+  </footer>
+  <script type="module" src="./js/extensions/nav-toggle.js"></script>
+  <script src="./js/extensions/risuko-stamp.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+:root{
+  --bg:#0c0e11;
+  --fg:#e9edf3;
+  --muted:#9aa3b2;
+  --line:#242a33;
+  --card:#12161c;
+  --acc:#6ee7b7;
+}
+
+html,
+body{
+  margin:0;
+  padding:0;
+  background:radial-gradient(1200px 600px at 50% -200px, #16202b 0%, #0c0e11 45%, #0c0e11 100%);
+  background:linear-gradient(
+  to top,
+  #4b4a35 0%,
+  #3a6658 50%,
+  #2b473f 100%
+  );
+  color:var(--fg);
+  font:16px/1.7 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+}
+
+.container{
+  max-width:1080px;
+  margin:56px auto;
+  padding:0 16px;
+}
+
+h1{
+  font-size:clamp(22px,3.4vw,32px);
+  letter-spacing:.02em;
+  margin:18px 0 6px;
+}
+
+.lead{
+  color:var(--muted);
+  margin:0 0 16px;
+}
+
+/* ==============================
+   Cards grid（大きめサムネ & 縦長寄せ）
+================================= */
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:90px;
+}
+
+.card{
+  margin:15px;
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.005));
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  cursor:pointer;
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 22px rgba(0,0,0,.28);
+  border-color:#2b3440;
+}
+
+/* トリミング無しのカード画像設定 */
+.card__imgwrap{
+  background:#0b0f14;
+  /* aspect-ratio:3/4; ← 削除 */
+}
+
+.card__imgwrap img{
+  width:100%;
+  height:auto;          /* ← 画像の縦長・横長そのまま反映 */
+  object-fit:contain;   /* ← 絶対トリミングしない */
+  object-position:center;
+  display:block;
+  background:#0b0f14;
+}
+
+
+.card__meta{
+  padding:12px 14px;
+}
+
+.card__title{
+  margin:0;
+  font-size:22px !important;
+  font-weight:700;
+  line-height:1.35;
+}
+
+.card__caption{
+  display:none; /* 拡大前は非表示 */
+}
+
+/* ==============================
+   Lightbox
+================================= */
+
+.lightbox[hidden]{
+  display:none !important;
+}
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  background:linear-gradient(
+  to bottom,
+  #8fa36a 0%,
+  #5a8e58 60%,
+  #224a36 100%
+  ) !important;
+  display:grid;
+  place-items:center;
+  padding:24px;
+}
+
+.lb__close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.06);
+  color:var(--fg);
+  font-size:22px;
+  cursor:pointer;
+  z-index:3;            /* ← クリックゾーンより前面へ */
+}
+
+.lb__stage{
+  max-width:min(92vw,1080px);
+  max-height:86vh;
+  margin:0;
+}
+
+.lb__stage img{
+  display:block;
+  max-width:100%;
+  max-height:85vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  margin:0 auto;
+  background:#0b0f14;
+}
+
+.lb__stage figcaption{
+  color:var(--muted);
+  margin-top:10px;
+}
+
+.lb__stage h3{
+  margin:4px 0;
+  font-size:26px;
+}
+
+.lb__stage p{
+  margin:0;
+  font-size:20px;
+}
+
+/* クリックゾーン（左右半分で前後遷移） */
+
+.lb__zone{
+  position:fixed;
+  top:0;
+  bottom:0;
+  width:50vw;
+  cursor:pointer;
+  outline:none;           /* ← クリック後の青枠を除去 */
+  user-select:none;       /* ← テキスト選択も防止 */
+  -webkit-tap-highlight-color:transparent; /* ← モバイルの青点灯を無効化 */
+}
+
+.lb__zone--prev{
+  left:0;
+}
+
+.lb__zone--next{
+  right:0;
+}
+
+.lb__zone:hover{
+  background:linear-gradient(90deg,rgba(255,255,255,.02),transparent);
+}
+
+.lb__zone--next:hover{
+  background:linear-gradient(270deg,rgba(255,255,255,.02),transparent);
+}
+
+.lb__stage img{
+  border:2px solid rgba(116, 189, 94, 0.521);  /* ← これが縁 */
+  border-radius:12px;                         /* ← 角を少しだけ丸める（好み） */
+  box-sizing:border-box;                      /* ← 画像のサイズ崩れ防止 */
+}
+
+/* ==============================
+   Mobile
+================================= */
+
+@media (max-width:640px){
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr); /* ← 常に3列固定 */
+    gap:20px;
+  }
+
+  .card__meta{
+    padding:10px 12px;
+  }
+
+  /* スマホ用：カード内タイトル文字を小さく */
+  .card__title{
+    font-size:15px !important;
+    line-height:1.4;
+    font-weight:600;
+  }
+
+  .lb__stage img{
+    max-height:87vh;
+  }
+
+  /* スマホ用：タイトル・キャプションを少し小さく */
+  .lb__stage h3{
+    font-size:18px;
+  }
+
+  .lb__stage p{
+    font-size:15px;
+    line-height:1.5;
+  }
+}

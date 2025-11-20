@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1NCR09VMKR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1NCR09VMKR');
+  </script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>PrismCat – phase-2</title>
+  <!-- /gallery/prismcat/phase-2/ からルートへは ../../../ -->
+  <link rel="stylesheet" href="../../../css/style.css"/>
+  <link rel="stylesheet" href="../../../css/header.css">
+
+  <script src="https://unpkg.com/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="../../../">Asunaro Works</a>
+    <nav>
+      <a href="../../../gallery/">Gallery</a>
+      <a href="../../../about/">About</a>
+      <a href="../../../process/">Process</a>
+      <a href="../../../contact/">Contact</a>
+      <a href="../../../link/">Link</a>
+      <a href="../../../sitemap/">Sitemap</a>
+    </nav>
+  </header>
+
+  <main class="section">
+    <div id="stage" class="figure" aria-live="polite"></div>
+    <div id="caption" class="caption"></div>
+
+    <div class="toolbar" style="margin:12px 0 8px; display:flex; gap:10px;">
+      <button id="playToggle" class="btn" type="button" aria-pressed="false" aria-label="Auto slide toggle">▶ Auto</button>
+      <button id="bgmToggle" class="btn" type="button" aria-pressed="false" aria-label="BGM toggle">♪ BGM</button>
+    </div>
+
+    <h2 style="margin:18px 0 10px">Album</h2>
+    <div class="slider" id="slider" aria-roledescription="carousel">
+      <button class="nav prev" type="button" aria-label="Previous">‹</button>
+      <div class="track" id="track" style="touch-action:pan-y;"></div>
+      <button class="nav next" type="button" aria-label="Next">›</button>
+      <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+    </div>
+
+    <div id="thumbs" class="thumbs" style="margin-top:8px;"></div>
+
+    <p style="margin-top:16px">
+      <a class="btn" href="../">← Back to Series</a>
+    </p>
+  </main>
+
+  <footer>© 2025 Asunaro Works. All rights reserved.</footer>
+
+  <script type="module">
+    import { loadYAML } from '../../../js/util/yaml-loader.js';
+
+    const DATA_URL = '../../../data/series/prismcat.yaml';
+    const PHASE_ID = 'phase-2';
+
+    // YAMLの 'assets/...' や '/assets/...' を phaseページ用に '../assets/...' へ補正
+    const urlFromPhase = (p) => p ? '../' + String(p).replace(/^\/+/, '') : p;
+
+    const $  = (s, r=document) => r.querySelector(s);
+    const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+    const el = {
+      stage:   $('#stage'),
+      caption: $('#caption'),
+      play:    $('#playToggle'),
+      bgm:     $('#bgmToggle'),
+      slider:  $('#slider'),
+      track:   $('#track'),
+      dots:    $('#dots'),
+      thumbs:  $('#thumbs'),
+      prev:    $('.prev'),
+      next:    $('.next'),
+    };
+
+    let idx = 0, items = [], timer = null, audio = null;
+
+    function setDotsActive(i){
+      $$('#dots .dot').forEach((d,k)=>d.classList.toggle('active',k===i));
+      $$('#thumbs .th').forEach((t,k)=>t.classList.toggle('active',k===i));
+    }
+    function go(n){
+      if(!items.length) return;
+      idx = (n + items.length) % items.length;
+      el.track.style.transform = `translateX(${ -100 * idx }%)`;
+      setDotsActive(idx);
+    }
+    function play(){
+      if(timer || items.length<=1) return;
+      el.play.textContent='⏸ Auto';
+      el.play.setAttribute('aria-pressed','true');
+      timer=setInterval(()=>go(idx+1),4000);
+    }
+    function pause(){
+      if(!timer) return;
+      clearInterval(timer); timer=null;
+      el.play.textContent='▶ Auto';
+      el.play.setAttribute('aria-pressed','false');
+    }
+
+    async function init(){
+      const spec = await loadYAML(DATA_URL);
+      const phases = spec?.series?.phases || spec?.phases || [];
+      const p = phases.find(x => String(x.id)===PHASE_ID || String(x.id)==='2' || x.key===PHASE_ID);
+      if(!p) throw new Error('phase-2 not found in YAML');
+
+      // タイトル＆キャプション
+      el.stage.innerHTML = '';
+      el.caption.innerHTML = `<h1>${p.title ?? 'Phase 2'}</h1><p>${p.caption ?? ''}</p>`;
+
+      // アルバム（URLは必ず urlFromPhase を通す）
+      items = Array.isArray(p.album) ? p.album : [];
+      el.track.innerHTML = items.map(i => `
+        <div class="slide">
+          <img src="${urlFromPhase(i.src)}" alt="${i.title ?? ''}">
+          <div class="legend"><h3>${i.title ?? ''}</h3><p>${i.text ?? ''}</p></div>
+        </div>`).join('');
+      el.dots.innerHTML = items.map((_,k)=>`<button class="dot" role="tab" data-i="${k}" aria-label="Go to slide ${k+1}"></button>`).join('');
+      el.thumbs.innerHTML = items.map((i,k)=>`
+        <button class="th" data-i="${k}" aria-label="Preview ${k+1}">
+          <img src="${urlFromPhase(i.src)}" alt="">
+        </button>`).join('');
+
+      const navDisabled = items.length<=1;
+      [el.prev, el.next, el.dots, el.thumbs, el.play].forEach(b=>{ if(b) b.disabled=navDisabled; });
+
+      el.prev?.addEventListener('click', ()=>{ pause(); go(idx-1); });
+      el.next?.addEventListener('click', ()=>{ pause(); go(idx+1); });
+      el.dots?.addEventListener('click', e=>{ const b=e.target.closest('.dot'); if(b){ pause(); go(+b.dataset.i); }});
+      el.thumbs?.addEventListener('click', e=>{ const b=e.target.closest('.th'); if(b){ pause(); go(+b.dataset.i); }});
+
+      // スワイプ
+      let sx=null;
+      el.track.addEventListener('pointerdown', e=>{ sx=e.clientX; el.track.setPointerCapture(e.pointerId); pause(); });
+      el.track.addEventListener('pointerup', e=>{
+        if(sx===null) return;
+        const dx=e.clientX-sx;
+        if(Math.abs(dx)>40) go(idx+(dx<0?1:-1));
+        sx=null;
+      });
+
+      // キー操作
+      window.addEventListener('keydown', e=>{
+        if(e.key==='ArrowLeft'){pause();go(idx-1);}
+        if(e.key==='ArrowRight'){pause();go(idx+1);}
+      });
+
+      // BGM（これも補正を忘れずに）
+      if(p.bgm){
+        audio = new Audio(urlFromPhase(p.bgm));
+        audio.loop=true; audio.volume=0.25;
+        el.bgm?.addEventListener('click', async()=>{ try{
+          if(audio.paused){ await audio.play(); el.bgm.textContent='♪ BGM: ON'; el.bgm.setAttribute('aria-pressed','true'); }
+          else{ audio.pause(); el.bgm.textContent='♪ BGM'; el.bgm.setAttribute('aria-pressed','false'); }
+        }catch(err){ console.warn('Autoplay blocked or audio error:',err); }});
+      }else{
+        el.bgm?.setAttribute('disabled','true');
+      }
+
+      go(0);
+    }
+
+    el.play.addEventListener('click', ()=> (timer?pause():play()));
+
+    init().catch(err=>{
+      console.error(err);
+      const m=document.createElement('p');
+      m.style.color='#f66';
+      m.textContent='読み込みでエラーが発生しました。コンソールを確認してください。';
+      el.caption.appendChild(m);
+    });
+  </script>
+  <script type="module" src="../../../js/extensions/nav-toggle.js"></script>
+
+</body>
+</html>

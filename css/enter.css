@@ -1,0 +1,95 @@
+/* ===========================
+   ENTER BUTTON
+   =========================== */
+.btn-enter {
+  font-family: "Noto Serif JP", "Playfair Display", serif;
+  display: inline-block;
+  padding: 10px 40px;
+  border-radius: 0; 
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f5f5f5;
+
+  background: linear-gradient(135deg, #0b0b0b 0%, #222222 100%);
+  border: 2px solid rgba(245, 214, 130, 0.85);
+
+  text-decoration: none;
+  text-align: center;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* hover：枠がふわっと発光 */
+.btn-enter:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #181818 0%, #333333 100%);
+  border-color: rgba(248, 231, 169, 1);
+  color: #ffffff;
+
+  box-shadow:
+    0 0 14px rgba(248, 231, 169, 0.9),
+    0 14px 32px rgba(0, 0, 0, 0.9);
+}
+
+/* active：押し込む */
+.btn-enter:active {
+  transform: translateY(0);
+  background: linear-gradient(135deg, #101010 0%, #262626 100%);
+  border-color: rgba(245, 214, 130, 0.9);
+
+  box-shadow:
+    0 0 8px rgba(245, 214, 130, 0.6),
+    0 8px 20px rgba(0, 0, 0, 0.8);
+
+  color: #111111;
+}
+
+/* ===========================
+   HERO 全体
+   =========================== */
+
+.hero {
+  padding-top: 70px;
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 中央揃え用ラップ */
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;   /* ← ここだけ調整すれば隙間すべて整う */
+}
+
+/* タイトル（柔らかく上品に） */
+.hero h1 {
+  font-family: "Noto Serif JP", serif;
+  font-weight: 500;
+  font-size: 2.8rem;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* サブタイトル */
+.hero .lead {
+  font-size: 1rem;
+  opacity: 0.85;
+}
+/* スマホ：限界まで広げつつ、必要なら自動で縮小 */
+@media (max-width: 480px) {
+  .hero h1 {
+    width: 100%;
+    font-size: clamp(1.4rem, 6vw, 2.4rem); 
+    /* ↑ 画面幅に応じて自動で縮む */
+    white-space: nowrap; /* ← 1行維持 */
+    text-align: center;
+  }
+}

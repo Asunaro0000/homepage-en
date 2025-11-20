@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>栞の森 — Asunaro Works</title>
+  <!-- Optional: project header -->
+  <link rel="stylesheet" href="../../../css/header.css">
+  <link rel="stylesheet" href="../../../css/style.css">
+  <link rel="stylesheet" href="./css/forest-spirit.css">
+
+</head>
+<body>
+  <header class="nav">
+      <a class="brand" href="../../../">Asunaro Works</a>
+      <nav aria-label="Primary">
+        <a href="../../../gallery/">Gallery</a>
+        <a href="../../../about/">About</a>
+        <a href="../../../process/">Process</a>
+        <a href="../../../contact/">Contact</a>
+        <a href="../../../link/">Link</a>
+        <a href="../../../sitemap/">Sitemap</a>
+      </nav>
+  </header>
+
+<body data-page="forest-gallery">
+
+  <!-- 背景（森の上送り。JSが制御） -->
+  <div class="forest-bg" aria-hidden="true"></div>
+
+  <main class="fg-wrapper">
+
+    <!-- 入口セクション -->
+    <section class="fg-section fg-intro">
+      <div class="fg-intro-inner">
+        <h1 class="fg-title">森の精霊ギャラリー</h1>
+        <p class="fg-lead">
+          木漏れ日と灯りのあいだ、頁と香りとささやきが静かに重なっていく。
+        </p>
+        <p class="fg-lead-sub"></p>
+      </div>
+    </section>
+
+    <!-- ギャラリー -->
+    <section class="fg-section fg-gallery">
+      <div class="fg-gallery-head">
+        <h2 class="fg-section-title">FOREST SPIRITS</h2>
+
+        <!-- BGMボタン -->
+        <button
+          class="bgm-toggle"
+          id="bgm-toggle"
+          type="button"
+          aria-pressed="false"
+          aria-label="BGMを再生"
+        >
+          ♪ BGM
+        </button>
+      </div>
+
+      <!-- ★ JS がここにカードを自動生成する -->
+      <div class="fg-grid" id="fg-grid"></div>
+    </section>
+
+    <!-- 奥の祠セクション -->
+    <section class="fg-section fg-lore">
+      <h2 class="fg-section-title">森のささやき</h2>
+      <p class="fg-text">
+        この森は、古来より精霊たちが棲む領域として知られています。<br>
+        彼らは森そのものと結びつき、季節の循環や光の流れを維持する役割を担っています。<br>
+        本展示では、精霊と森が共に存在する「日常の情景」を記録としてまとめました。<br>
+        外界から隔てられた、この静かな領域の一端をご覧ください。
+      </p>
+      <p class="fg-text">
+
+      </p>
+    </section>
+
+  </main>
+
+  <!-- ===== ライトボックス（拡大表示） ===== -->
+  <div class="fg-lightbox" id="fg-lightbox" aria-hidden="true">
+    <div class="fg-lightbox-inner">
+      <button class="fg-lightbox-close" type="button" aria-label="閉じる">×</button>
+      <figure class="fg-lightbox-figure">
+        <img src="" alt="" id="fg-lightbox-img" />
+        <figcaption id="fg-lightbox-caption"></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- JS：背景の上送り + ギャラリー生成 + ライトボックス -->
+  <script src="./js/main.js"></script>
+  <!-- JS：BGM制御（別ファイルにしている場合） -->
+  <script src="./js/bgm.js"></script>
+  <script type="module" src="../../../js/extensions/nav-toggle.js"></script>
+
+</body>
+</html>

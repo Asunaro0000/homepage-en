@@ -1,0 +1,102 @@
+/* CyberCats v2 (scoped) — pop & neon */
+body[data-page="cybercats"]{
+  --bg:#0a0a0a;
+  --fg:#eaeaea;
+  --muted:#c9c9c9;
+  --neon:#00ffe6;
+  --accent:#ff5df7;
+  --card: rgba(255,255,255,.06);
+  --border: rgba(255,255,255,.12);
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family: "Noto Sans JP", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height:1.75;
+}
+
+body[data-page="cybercats"] *{ box-sizing: border-box; }
+
+body[data-page="cybercats"] .site-header,
+body[data-page="cybercats"] .site-footer{ text-align:center; padding:20px 12px; }
+
+body[data-page="cybercats"] h1{
+  margin:.2em 0 0; font-size: clamp(22px, 5.2vw, 36px);
+  color: var(--neon); letter-spacing:.02em; font-weight:800;
+  text-shadow: 0 0 12px rgba(0,255,230,.25);
+}
+
+body[data-page="cybercats"] .tagline{ margin:.4em 0 0; color:var(--muted); }
+
+body[data-page="cybercats"] .wrap{ width:min(920px, 94%); margin:0 auto; }
+
+body[data-page="cybercats"] .section{ margin: 20px 0 28px; }
+body[data-page="cybercats"] .info{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px 16px 6px;
+}
+
+body[data-page="cybercats"] h2{
+  margin:.2em 0 .6em; font-size: clamp(16px, 3.8vw, 22px);
+  color:#ffd25f;
+  border-left:4px solid #ffd25f; padding-left:8px;
+}
+body[data-page="cybercats"] h3{ margin:1.1em 0 .4em; font-size: clamp(14px,3.4vw,18px); color:#cfe7ff; }
+
+body[data-page="cybercats"] a{ color:#7fe8ff; text-decoration:none; }
+body[data-page="cybercats"] a:hover{ text-decoration:underline; }
+
+body[data-page="cybercats"] .video-container{
+  position:relative; width:100%;
+  aspect-ratio: 16 / 9;
+  background:#111; border:1px solid var(--border); border-radius:12px; overflow:hidden;
+  box-shadow: 0 0 24px rgba(0,255,230,.12) inset;
+}
+body[data-page="cybercats"] .video{ width:100%; height:100%; display:block; object-fit:cover; }
+
+body[data-page="cybercats"] .lead{ color:#fff; }
+
+body[data-page="cybercats"] .list{ margin:.2em 0 1em 1.2em; }
+body[data-page="cybercats"] .list li + li{ margin-top:.2em; }
+
+/* 行動アイコン画像 */
+body[data-page="cybercats"] .icon-gallery{ text-align:center; margin: .6em 0 1em; }
+body[data-page="cybercats"] .icon-gallery img{
+  max-width: min(680px, 92%);
+  height:auto; display:inline-block;
+  border-radius:8px;
+  box-shadow: 0 0 10px rgba(0,255,230,0.25);
+}
+
+/* ============================
+   CyberCat タイトルセクション強調
+   ============================ */
+.highlight-title {
+  border: 2px solid var(--accent, #ffd34a); /* 既存accent色を使用 */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 211, 74, 0.08) 0%,
+    rgba(255, 211, 74, 0.02) 100%
+  );
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 1.8em;
+  box-shadow: 0 0 12px rgba(255, 211, 74, 0.25);
+}
+
+.highlight-title h2 {
+  color: #ffb300; /* より鮮やかな金色トーン。背景に映える暖色 */
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-bottom: 0.4em;
+}
+
+.highlight-title a {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--accent, #ffd34a);
+}
+
+.highlight-title a:hover {
+  color: var(--accent, #ffd34a);
+}

@@ -1,0 +1,236 @@
+/* =========================================================
+   1. Hero（タイトル・ブランド）
+   ========================================================= */
+
+.hero {
+  max-width: 900px;
+  margin: 40px auto 32px;
+  padding: 0 16px;
+  text-align: center;
+  color: #fff;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 2.8vw + 1rem, 3rem);
+  font-weight: 700;
+  letter-spacing: .06em;
+  margin: 0 0 10px;
+}
+
+.hero .lead {
+  font-size: .95rem;
+  opacity: .8;
+  margin: 0 0 18px;
+}
+
+.hero .btn {
+  display: inline-block;
+  padding: 10px 28px;
+  border-radius: 999px;
+  background: #6aff83;
+  color: #1a1a1a;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.hero .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.65);
+}
+
+
+/* =========================================================
+   2. リス子＋バナー行（PCで2カラム / SPで縦）
+   - PC: リス子とバナーを横並び＆同じ高さ
+   - SP: 縦並び
+   ========================================================= */
+
+.feature-row {
+  max-width: 1040px;
+  margin: 0 auto 56px;
+  padding: 32px 16px 40px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px 40px;
+}
+
+.feature-row__col {
+  display: flex;
+  justify-content: center;
+}
+
+/* PC以上で2カラム＆高さを stretch */
+@media (min-width: 960px) {
+  .feature-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch; /* 各カラムの行の高さをそろえる */
+  }
+
+  .feature-row__col {
+    align-items: stretch; /* 中身のカードを同じ高さに */
+  }
+}
+
+/* 共通カード（リス子側とバナー側） */
+.feature-row__col--main .risuko-wrap,
+.feature-row__col--side .top-banner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 420px;
+
+  /* 高さそろえ用 */
+  min-height: 600px; /* 基準値。必要ならここを調整 */
+  height: 100%;
+
+  margin: 0;
+  padding: 20px 0px 20px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, .35);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .55);
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* スマホではちょっとだけ間延びを抑える */
+@media (max-width: 959.98px) {
+  .feature-row__col--main .risuko-wrap,
+  .feature-row__col--side .top-banner {
+    min-height: 500px;
+  }
+}
+
+/* ------------------------------
+   リス子カード内レイアウト
+   ------------------------------ */
+
+.feature-row__col--main .risuko-wrap {
+  align-items: center;
+}
+
+/* スタンプ本体を中央寄せで伸ばす */
+.feature-row__col--main #risuko-dynamic {
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 画像をカード幅にフィットさせる */
+.feature-row__col--main .risuko-stamp img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ボタン群はカード下部側に寄せる */
+.feature-row__col--main .controls {
+  margin-top: 12px;
+}
+
+/* ------------------------------
+   バナーカード内レイアウト
+   ------------------------------ */
+
+.feature-row__col--side .top-banner {
+  /* 既存の banner_style.css を上書きしすぎないように、
+     レイアウト寄りの指定だけここでやる */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* 画像枠を上側に固定配置 */
+.feature-row__col--side .top-banner__image-wrap {
+  margin-bottom: 14px;
+}
+
+/* 画像はカード幅いっぱいで収める（正方形化は banner_style.css 側で調整可） */
+.feature-row__col--side .top-banner__image-wrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* テキスト部分は残りの高さを使う */
+.feature-row__col--side .top-banner__text {
+  margin-top: auto;
+}
+
+/* ドット類（インジケーター）は下寄せ */
+.feature-row__col--side .top-banner__dots {
+  margin-top: 12px;
+}
+
+
+/* =========================================================
+   3. サイトマップ – Forest Map
+   ========================================================= */
+
+.sitemap-section {
+  max-width: 720px;
+  margin: 60px auto 40px;
+  padding: 24px 28px;
+  background: rgba(0, 0, 0, .25);
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .25);
+}
+
+.sitemap-section h2 {
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+}
+
+.sitemap-text {
+  font-size: .9rem;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.sitemap-btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: #ffd86a;
+  color: #1a1a1a;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
+}
+
+
+/* =========================================================
+   4. お知らせ（NEWS）
+   ========================================================= */
+
+.news {
+  max-width: 720px;
+  margin: 0 auto 80px;
+  padding: 0 16px;
+}
+
+.news h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.news ul {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   5. Utility（共通）
+   ========================================================= */
+
+.is-hidden {
+  display: none !important;
+}

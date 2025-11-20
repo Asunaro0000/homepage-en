@@ -1,0 +1,125 @@
+/* =========================================================
+   Top Banner (auto slider) - style only
+   ========================================================= */
+
+/* Banner frame aligned with Risuko card */
+.top-banner {
+  background: #0e0e0e;            /* 黒い内枠カード */
+  border-radius: 18px;
+  padding: 18px 18px 20px;
+  box-shadow: 0 0 25px rgba(0,0,0,.35);
+
+  /* Match Risuko card height */
+  min-width: 280px;
+  max-width: 360px;
+  min-height: 400px;
+  max-height: 500px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;            /* 中身を中央寄せ */
+}
+
+/* Square image area - full cover */
+.top-banner__image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;     /* 正方形固定 */
+  overflow: hidden;
+  border-radius: 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Image fills the frame without margin */
+.top-banner__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* 余白なしで中央揃え */
+  object-position: center;  /* 中央 */
+  transition: opacity .4s ease, transform .4s ease;
+}
+
+
+
+/* Fade animation */
+.top-banner__image-wrap img.is-fading {
+  opacity: 0;
+  transform: translateX(-14px);
+}
+
+/* Text area - ボタンごと中央揃えにする本体 */
+.top-banner__text {
+  margin-top: 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;            /* 横方向センター */
+  text-align: center;             /* 文字もセンター */
+}
+
+.top-banner__caption {
+  font-size: .9rem;
+  color: #eee;
+  margin-bottom: 8px;
+  transition: opacity .25s ease;
+}
+
+/* CTA button */
+.top-banner__btn {
+  display: inline-block;
+  margin-top: 4px;                /* キャプションとの間隔 */
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: #ffd769;
+  color: #2a2100;
+  font-size: .86rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,.4);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.top-banner__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.55);
+}
+
+/* Dot indicators */
+.top-banner__dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.top-banner__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #666;
+  opacity: .45;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: opacity .15s ease, width .2s ease;
+}
+
+/* Larger click hitbox */
+.top-banner__dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+.top-banner__dot:hover {
+  opacity: .8;
+}
+
+.top-banner__dot.is-active {
+  width: 24px;
+  background: #ffd769;
+  opacity: 1;
+  transform: translateY(-1px);
+}

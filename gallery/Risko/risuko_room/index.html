@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+  <audio id="bgmAudio" preload="none"></audio>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>リス子の自然散歩の部屋 | Asunaro Works</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1NCR09VMKR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1NCR09VMKR');
+  </script>
+
+  <!-- site header（共通CSS） -->
+  <link rel="stylesheet" href="../../../css/header.css">
+  <link rel="stylesheet" href="../../../css/style.css">
+
+  <!-- パノラマ専用CSS -->
+  <link rel="stylesheet" href="./css/panorama.css">
+  
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="../../../">Asunaro Works</a>
+    <nav aria-label="Primary">
+      <a href="../../../gallery/">Gallery</a>
+      <a href="../../../about/">About</a>
+      <a href="../../../process/">Process</a>
+      <a href="../../../contact/">Contact</a>
+      <a href="../../../link/">Link</a>
+      <a href="../../../sitemap/">Sitemap</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>リス子の自然散歩の部屋</h1>
+    <p class="lead">
+      ひと続きの森を、横に歩くように見られるパノラマ展示です。<br>
+      クリック／スワイプで横へ進み、最後まで行くと次の部屋に入れます。（スマホは横向き推奨）
+    </p>
+
+    <!-- パノラマ本体 -->
+    <section class="panorama-wrap">
+      <div class="panorama" id="panorama" aria-label="Risuko nature walk panorama">
+        <!-- panorama.js が 1.webp ～ 21.webp を自動挿入 -->
+      </div>
+    </section>
+
+    <!-- 最初から用意しておくが、スクロール完了まで透明 -->
+  <div id="panoGoto" class="pano-goto">
+    <a href="https://asunaro0000.github.io/risuko/" class="pano-goto__btn pano-disabled">
+      リス子のストーリーボードへ
+    </a>
+    <button id="bgmToggle" class="pano-bgm-btn">
+      BGM: OFF
+    </button>
+  </div>
+  <!-- BGM（パスは環境に合わせて変更） -->
+  <audio id="bgmAudio" src="./bgm/bgm.mp3" preload="auto" loop></audio>
+
+  <footer>© 2025 Asunaro Works.</footer>
+
+  <!-- パノラマ生成＆ドラッグ処理 -->
+  <script src="./js/panorama.js"></script>
+  <script src="./js/bgm.js"></script>
+
+  <script type="module" src="../../../js/extensions/nav-toggle.js"></script>
+  <audio id="bgmAudio" preload="none"></audio>
+
+</body>
+</html>

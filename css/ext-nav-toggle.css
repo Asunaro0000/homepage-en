@@ -1,0 +1,60 @@
+/* モバイル専用メニュー開閉（拡張CSS） */
+.nav-toggle { display: none; }
+
+@media (max-width: 900px) {
+  /* ヘッダーを相対配置にして右上へ絶対配置 */
+  header.nav {
+    position: sticky;  /* 既存と整合 */
+    z-index: 10;
+    padding-right: 56px; /* 右上ボタンのための余白 */
+  }
+
+  .nav-toggle {
+    display: inline-block;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 21;
+
+    padding: 6px 10px;
+    font-size: 18px;
+    color: var(--fg);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* ▼ モバイルでは通常の横並びナビを隠す */
+  header.nav nav {
+    position: absolute;
+    top: 56px;          /* ヘッダー直下 */
+    right: 12px;
+    display: none !important;   /* ←重要：PC用表示を抑止 */
+    flex-direction: column;
+    min-width: 200px;
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* 開いた時だけ表示 */
+  header.nav.menu-open nav { display: flex !important; }
+
+  header.nav nav a {
+    display: block;
+    padding: 12px 14px;
+    margin: 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 16px;
+  }
+  header.nav nav a:last-child { border-bottom: none; }
+
+  /* 開いている時のボタン強調（任意） */
+  header.nav.menu-open .nav-toggle {
+    background: rgba(255,255,255,.08);
+  }
+}

@@ -1,0 +1,238 @@
+/*
+ * Gallery Only Styles
+ * scope: body[data-page="gallery"]
+ */
+
+:root {
+  --g-max: 700px;
+  --g-wide: 1400px;
+  --g-pad: 24px;
+  --g-gap: 20px;
+
+  --g-bg: #0e0f12;
+  --g-card: #15171c;
+  --g-fg: #e9eef6;
+  --g-fg-dim: #b8c0cc;
+  --g-border: rgba(255,255,255,.08);
+
+  --g-radius-xl: 22px;
+  --g-radius-lg: 18px;
+  --g-radius-md: 14px;
+  --g-shadow: 0 10px 36px rgba(0,0,0,.35);
+}
+
+/*body[data-page="gallery"] {
+  background: var(--g-bg);
+  color: var(--g-fg);
+}*/
+
+/* ====== Wrap / Blocks ====== */
+body[data-page="gallery"] .g-wrap {
+  max-width: var(--g-wide);
+  margin-inline: auto;
+  padding: 20px var(--g-pad) 56px;
+}
+body[data-page="gallery"] .g-block {
+  max-width: var(--g-max);
+  margin: 0 auto 40px;
+}
+body[data-page="gallery"] .g-block__title {
+  font-size: clamp(20px, 3vw, 26px);
+  margin: 0 0 8px;
+}
+body[data-page="gallery"] .g-block__lead {
+  margin: 0 0 16px;
+  color: var(--g-fg-dim);
+}
+body[data-page="gallery"] .g-stack {
+  display: grid;
+  gap: 24px;
+}
+
+/* ====== Game panel ====== */
+body[data-page="gallery"] .g-game {
+  border: 1px solid var(--g-border);
+  background: var(--g-card);
+  border-radius: var(--g-radius-xl);
+  overflow: hidden;
+  box-shadow: var(--g-shadow);
+}
+body[data-page="gallery"] .g-game__head {
+  padding: 16px 18px 2px;
+}
+body[data-page="gallery"] .g-game__title {
+  font-size: clamp(18px, 2.4vw, 22px);
+  margin: 0 0 6px;
+}
+body[data-page="gallery"] .g-game__subtitle {
+  margin: 0 0 8px;
+  color: var(--g-fg-dim);
+}
+
+/* ====== Exhibit (title above each slider) ====== */
+body[data-page="gallery"] .g-exhibit__title {
+  font-size: clamp(18px, 2.2vw, 22px);
+  margin: 0 0 12px;
+}
+
+/* ====== Empty/Error ====== */
+body[data-page="gallery"] .g-empty,
+body[data-page="gallery"] .g-error {
+  color: var(--g-fg-dim);
+  padding: 8px 2px;
+}
+
+/* ===================== Slider ===================== */
+body[data-page="gallery"] .sld-wrap {
+  margin: 10px 0 18px;
+}
+body[data-page="gallery"] .sld {
+  max-width: 700px;
+  margin: 0 auto;       
+  position: relative;
+  background: var(--g-card);
+  border: 1px solid var(--g-border);
+  border-radius: var(--g-radius-xl);
+  box-shadow: var(--g-shadow);
+  overflow: hidden;
+}
+body[data-page="gallery"] .sld__viewport {
+  overflow: hidden;
+}
+body[data-page="gallery"] .sld__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  transition: transform .35s ease;
+}
+body[data-page="gallery"] .sld__slide {
+  position: relative;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;      /* 縦方向の中央寄せ */
+  justify-content: center;  /* 横方向も中央寄せ */
+  
+}
+body[data-page="gallery"] .sld__link {
+  display: block;
+}
+body[data-page="gallery"] .sld__slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--g-radius-lg);
+}
+
+/* arrows */
+body[data-page="gallery"] .sld__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--g-border);
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  cursor: pointer; z-index: 3;
+  display: grid; place-items: center;
+  transition: filter .2s ease, transform .05s ease;
+}
+body[data-page="gallery"] .sld__prev { left: 6px; }
+body[data-page="gallery"] .sld__next { right: 6px; }
+body[data-page="gallery"] .sld__nav:hover  { filter: brightness(1.1); }
+body[data-page="gallery"] .sld__nav:active { transform: translateY(-50%) scale(.98); }
+
+/* meta (title + dots) */
+body[data-page="gallery"] .sld__meta {
+  background: #0f1116;
+  border-top: 1px solid var(--g-border);
+  padding: 10px 14px 12px;
+}
+body[data-page="gallery"] .sld__title {
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+body[data-page="gallery"] .sld__dots {
+  display: flex;
+  gap: 6px;
+}
+body[data-page="gallery"] .sld__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,.25);
+  border: none; cursor: pointer;
+}
+body[data-page="gallery"] .sld__dot.active { background: #fff; }
+
+/* thumbs */
+body[data-page="gallery"] .sld__thumbs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 2px 0;
+}
+body[data-page="gallery"] .sld__th {
+  width: 64px; height: 64px;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--g-border);
+  background:#0b0c10;
+  cursor: pointer; padding: 0;
+}
+@media (min-width: 900px){
+  body[data-page="gallery"] .sld__th { width: 72px; height: 72px; }
+}
+body[data-page="gallery"] .sld__th img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+body[data-page="gallery"] .sld__th.active {
+  outline: 2px solid rgba(255,255,255,.3);
+}
+
+
+ /* ギャラリーの左右余白をゼロにする */
+ body[data-page="gallery"] { --g-pad: 0px; }
+ body[data-page="gallery"] .g-wrap { padding: 20px 0 56px; }  /* 丸ごと上書き */
+
+/* === Header (Nav) tune-up === */
+/*body[data-page="gallery"] .nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 16px;
+  max-width: var(--g-wide);
+  margin: 0 auto;
+}
+
+/* === Header Title === */
+/*body[data-page="gallery"] .nav .brand {
+/*  font-size: clamp(18px, 2.2vw, 24px); /* ← ロゴ/サイト名を大きく */
+/*  font-weight: 700;
+  color: var(--g-fg);
+  text-decoration: none;
+  letter-spacing: .02em;
+}
+
+/*body[data-page="gallery"] .nav nav {
+  display: flex;
+  gap: 18px;
+  margin-left: auto; /* 右寄せ */
+/*}
+
+/*body[data-page="gallery"] .nav nav a {
+  font-size: clamp(14px, 1.6vw, 18px); /* ← メニューの文字を拡大 */
+/*  font-weight: 600;
+  color: var(--g-fg);
+  opacity: .9;
+  text-decoration: none;
+/*}
+
+/*body[data-page="gallery"] .nav nav a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+/* === Gallery layout final override === */
+body[data-page="gallery"] { --g-pad: 0px; }
+
+/* 丸ごと上書きして左右0を確実に適用 */
+body[data-page="gallery"] .g-wrap {
+  padding: 20px 0 56px !important;  /* 必要なら一旦 !important で確実に勝たせる */
+}

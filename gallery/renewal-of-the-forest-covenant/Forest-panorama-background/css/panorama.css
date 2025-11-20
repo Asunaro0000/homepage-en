@@ -1,0 +1,328 @@
+/* ----------------------------------------- */
+/*     PC用：ごく薄い横スクロールバー      */
+/* ----------------------------------------- */
+
+.panorama {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* PC用の細いスクロールバー */
+  scrollbar-width: thin;         /* Firefox */
+  scrollbar-color: rgba(255,255,255,.15) rgba(255,255,255,0); 
+}
+
+/* Chrome / Edge / Safari */
+.panorama::-webkit-scrollbar {
+  height: 6px;                   /* 超細い */
+}
+
+.panorama::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0);     /* 完全透明 */
+}
+
+.panorama::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.18);   /* うっすら白 */
+  border-radius: 4px;
+}
+
+/* ホバーしたときだけ少し濃くする */
+.panorama:hover::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.35);
+}
+
+/* スマホはスクロールバー完全非表示 */
+@media (max-width: 768px) {
+  .panorama {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .panorama::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+/* ============================== */
+/*     最後まで行くまで無効状態    */
+/* ============================== */
+
+.pano-disabled {
+  opacity: 0.45;
+  pointer-events: none;    /* 押せない */
+  filter: grayscale(40%);  /* 少し色を落とす */
+}
+
+.pano-goto__btn:not(.pano-disabled):hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.45),
+    0 0 20px rgba(255,230,150,1);
+}
+
+@media (max-width: 768px) {
+  .pano-goto__btn {
+    font-size: 14px;
+    padding: 10px 24px;
+  }
+}
+
+/* ============================================= */
+/*   スマホ横向き時：画像の高さを制限する対応   */
+/* ============================================= */
+
+@media screen and (max-width: 900px) and (orientation: landscape) {
+  .panorama img {
+    max-height: 80vh;       /* 高さの最大値を画面の8割に */
+    height: auto;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .panorama {
+    height: auto;
+    align-items: center;     /* 縦中央揃えで見やすく */
+  }
+}
+
+/* 画像下のガイドボタン＋BGMボタン */
+.pano-goto {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ストーリーボードボタンはそのまま（前に作ったやつを使用） */
+.pano-goto__btn {
+  padding: 14px 32px;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg,
+    rgba(255,230,150,0.95),
+    rgba(255,200,90,0.95)
+  );
+  color: #4a3500;
+  font-weight: 700;
+  font-size: 16px;
+
+  border: 2px solid rgba(255,240,190,0.95);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.35),
+    0 0 12px rgba(255,220,120,0.9);
+
+  text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease, opacity .2s;
+}
+
+/* 最後まで行くまで無効 */
+.pano-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+  filter: grayscale(40%);
+}
+
+.pano-goto__btn:not(.pano-disabled):hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.45),
+    0 0 20px rgba(255,230,150,1);
+}
+
+/* BGMボタン */
+.pano-bgm-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.5);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+/* ON状態を少し明るく */
+
+
+.pano-bgm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+}
+
+@media (max-width: 768px) {
+  .pano-goto__btn {
+    font-size: 14px;
+    padding: 10px 24px;
+  }
+  .pano-bgm-btn {
+    font-size: 13px;
+    padding: 8px 18px;
+  }
+}
+
+/* ----------------------------------------- */
+/*  パノラマ用 キャプション＋サムネイル群   */
+/* ----------------------------------------- */
+
+.pano-caption-block {
+  margin-top: 16px;
+  text-align: left;
+}
+
+.pano-caption-block h2 {
+  font-size: 20px;
+  margin: 0 0 4px;
+}
+
+.pano-caption-block p {
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.pano-thumbs {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.pano-thumb {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
+  padding: 6px 8px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.pano-thumb img {
+  display: block;
+  width: 80px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.pano-thumb span {
+  font-size: 12px;
+  color: #f7f3e8;
+  white-space: nowrap;
+}
+
+.pano-thumb.is-active {
+  box-shadow:
+    0 0 0 2px rgba(255, 224, 130, 0.95),
+    0 0 14px rgba(255, 224, 130, 0.7);
+  transform: translateY(-2px);
+}
+
+.pano-thumb:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .pano-caption-block h2 {
+    font-size: 18px;
+  }
+  .pano-caption-block p {
+    font-size: 13px;
+  }
+  .pano-thumb img {
+    width: 72px;
+    height: 40px;
+  }
+  .pano-thumb span {
+    font-size: 11px;
+  }
+}
+
+
+/* ============================================= */
+/*  部屋タイトル＋説明文＋BGMボタンのレイアウト  */
+/* ============================================= */
+
+.room-head {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.room-head-text {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+/* 上部用BGMボタンの微調整 */
+.room-head .pano-bgm-btn {
+  margin-top: 4px;
+}
+
+/* スマホでは縦積みにして右上寄せ */
+@media (max-width: 768px) {
+  .room-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .room-head .pano-bgm-btn {
+    align-self: flex-end;
+    margin-top: 8px;
+  }
+}
+/* ----------------------------------------- */
+/*  パノラマ進行ランプ                      */
+/* ----------------------------------------- */
+
+.pano-progress {
+  margin: 8px auto 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pano-progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.pano-progress-dot.is-on {
+  background: #ffe48a;
+  box-shadow:
+    0 0 6px rgba(255, 240, 180, 0.9),
+    0 0 16px rgba(255, 215, 120, 0.8);
+  transform: translateY(-1px);
+}
+.panorama {
+  height: 1000px; /* ← ここを画像の高さと同じにする */
+  overflow-x: auto;
+  white-space: nowrap;
+  line-height: 0; /* ★ 下の余白を完全に消す */
+}
+
+.panorama img {
+  height: 100%;
+  width: auto;
+  object-fit: cover; /* 横が切れてOK */
+  display: inline-block;
+}
+

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1NCR09VMKR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1NCR09VMKR');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberCats | Asunaro Works</title>
+  <link rel="stylesheet" href="../../css/header.css">
+  <link rel="stylesheet" href="../../css/style.css">
+  <!-- ページ固有 -->
+  <link rel="stylesheet" href="cybercats.css">
+
+
+
+
+  <!-- headの先頭に入れる：galleryでもaboutでも同じでOK -->
+<script>
+(function () {
+  const REPO = "asunaro0000.homepage";  // ← リポジトリ名に合わせて1箇所だけ設定
+
+  function computeRootBase() {
+    // GitHub Pages上： https://username.github.io/REPO/
+    if (location.hostname.endsWith("github.io")) {
+      return `https://${location.hostname}/${REPO}/gallery/CyberCats/`;
+    }
+    // ローカル or 別ホスト：URLパスの中から REPO/ までを抜き出す
+    const href = location.href.replace(/\\/g, "/");
+    const m = href.match(new RegExp(`^(.*?/${REPO}/)`));
+    if (m) return m[1];
+    // それでも見つからないときの最後の保険（同階層）
+    return "./";
+  }
+
+  const root = computeRootBase();
+  let base = document.querySelector("base");
+  if (!base) {
+    base = document.createElement("base");
+    document.head.prepend(base);
+  }
+  base.href = root;
+  // 開発確認用
+  console.log("[base] =>", root);
+})();
+</script>
+
+
+
+</head>
+<body data-page="cybercats">
+  <header class="nav">
+    <a class="brand" href="../../">Asunaro Works</a>
+    <nav>
+      <a href="../../gallery/">Gallery</a>
+      <a href="../../about/">About</a>
+      <a href="../../process/">Process</a>
+      <a href="../../contact/">Contact</a>
+      <a href="../../link/">Link</a>
+      <a href="../../sitemap/">Sitemap</a>
+
+      <!-- 作品個別リンクを付けたい場合は下を使う（任意）
+      <a href="../link/">Link</a>
+      -->
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <!-- 動画：mp4直再生（広告なし） -->
+<section class="section">
+  <div class="video-container">
+    <video class="video" id="cybercatsVideo" controls playsinline muted preload="metadata" style="max-width:100%">
+      <source src="/asunaro0000.homepage/gallery/CyberCats/assets/video/cybercats_preview.mp4?v=2" type="video/mp4">
+      <source src="/asunaro0000.homepage/gallery/CyberCats/assets/video/cybercats_preview.webm?v=2" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</section>
+
+
+<script>
+  (function(){
+    // baseURIをもとに最終的な動画URLを解決
+    const src = new URL("assets/video/cybercats_preview.mp4", document.baseURI).href;
+    document.getElementById("videoSource").src = src;
+    console.log("[video path] =>", src);
+  })();
+</script>
+
+
+    <!-- 外部リンク -->
+    <section class="section info highlight-title">
+      <h2>Cyber Cat Battle</h2>
+      <p>
+        <a href="https://asunaro0000.github.io/cyber-cat-battle/" target="_blank" rel="noopener">
+          https://asunaro0000.github.io/cyber-cat-battle/
+        </a>
+      </p>
+    </section>
+
+    <!-- 作品説明（ポップ調） -->
+    <section class="section info">
+      <h2>作品の説明</h2>
+      <p>
+        CyberCats は、AIが描いたキャラクター＆背景＆UIだけで作った、シンプル操作のターン制バトル！<br>
+        攻撃・スキル・防御・回避…見た目も動きもサイバーに決めて、ド派手なバトル演出を楽しもう。<br>
+        スマートフォンは横画面用です。
+      </p>
+    </section>
+
+    <!-- 操作方法 -->
+    <section class="section info">
+      <h2>操作方法</h2>
+
+      <h3>⏱ 1分で遊び方マスター！</h3>
+      <p class="lead">
+        Lv.1〜5の敵を順に倒して、最終ボスを撃破！<br>
+        クリアするとアルバムが解放されます。
+      </p>
+
+      <h3>🔄 バトルの流れ</h3>
+      <ul class="list">
+        <li>毎ターン <strong>エナジー+3</strong>（最大10）</li>
+        <li>行動を<strong>1つ選択</strong>（エナジーを消費）</li>
+        <li>敵の反撃！ただし<strong>回避成功</strong>でノーダメ✨</li>
+      </ul>
+
+      <h3>🪄 行動一覧（コスト / 効果）</h3>
+
+      <!-- アイコン画像（埋め込みスペース） -->
+      <div class="icon-gallery">
+       
+        <img src="assets/img/action_icons.png" alt="行動アイコン一覧">
+        <p>アイコンの説明：左から攻撃、スキル、防御、回避、特殊スキル、必殺技</p>
+      </div>
+
+      <ul class="list">
+        <li>攻撃（2）：標準攻撃</li>
+        <li>スキル（4）：強力な一撃！</li>
+        <li>防御（0）：受けるダメージを30%カット</li>
+        <li>回避（2）：成功→敵攻撃なし＋エナジー全回復 / 失敗→被ダメ1.2倍😨</li>
+        <li>特殊スキル（5）：キャラ固有バフ（例：与ダメ2倍 / 被ダメ0 など）</li>
+        <li>必殺技（6）：HP25%以下で覚醒演出🔥</li>
+        <p>※（ ）はエナジー消費量</p>
+      </ul>
+
+      <h3>⚔️ 進行・勝敗</h3>
+      <ul class="list">
+        <li>Lv.1〜4撃破 → 自動で次の敵へ（HP全回復）</li>
+        <li>Lv.5撃破 → エンディング＆アルバム解放</li>
+        <li>全員倒れるとゲームオーバー</li>
+      </ul>
+
+      <h3>👀 画面の見方</h3>
+      <ul class="list">
+        <li>上段：バトル画面（敵：左／プレイヤー：右）</li>
+        <li>下段：行動ボタン・エナジー・戦闘ログ</li>
+        <li>上部ボタン：キャラ変更／リロード／降参／アルバム</li>
+      </ul>
+    </section>
+  </main>
+  <script type="module" src="../../js/extensions/nav-toggle.js"></script>
+
+  <footer>© 2025 Asunaro Works. All rights reserved.</footer>
+</body>
+</html>

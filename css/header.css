@@ -1,0 +1,164 @@
+/* ======================================================================
+   Asunaro Works — Header Only CSS (site-header)
+   どのページでも同じ見え方に固定。style.css / gallery.css とは独立。
+   ----------------------------------------------------------------------
+   期待するHTML:
+   <header class="site-header">
+     <div class="site-header__inner">
+       <a class="site-brand" href="/">Asunaro Works</a>
+       <nav class="site-nav" aria-label="Primary">
+         <a href="/gallery/">Gallery</a>
+         <a href="/about/">About</a>
+         <a href="/process/">Process</a>
+         <a href="/contact/">Contact</a>
+       </nav>
+     </div>
+   </header>
+   ====================================================================== */
+
+/* 依存しないよう最低限の変数を自前で用意（style.cssが無くても破綻しない） */
+
+:root {
+  --hdr-bg: rgba(14,15,18,.6);
+  --hdr-fg: #f5f6f7;
+  --hdr-muted: #c8ccd7;
+  --hdr-border: rgba(255,255,255,.12);
+  --hdr-maxw: 1200px;
+}
+
+/* baseline reset for all pages that only load header.css */
+html, body { margin: 0; padding: 0; }
+* { box-sizing: border-box; }
+
+
+/* ヘッダー（土台） */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(6px);
+  background: var(--hdr-bg);
+  color: var(--hdr-fg);
+  border-bottom: 1px solid var(--hdr-border);
+}
+
+/* 中身を中央に寄せるラッパ */
+.site-header__inner{
+  max-width: var(--hdr-maxw);
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ブランド */
+.site-brand{
+  font-weight: 800;
+  letter-spacing: .02em;
+  font-size: clamp(18px, 2.2vw, 24px);
+  color: var(--hdr-fg);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* ナビゲーション */
+.site-nav{
+  margin-left: auto;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  overflow-x: auto;        /* メニューが多い時に横スクロールで崩れない */
+  -webkit-overflow-scrolling: touch;
+}
+.site-nav a{
+  color: var(--hdr-fg);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: clamp(14px, 1.6vw, 18px);
+  opacity: .95;
+  padding: 6px 6px;
+  border-radius: 6px;
+  transition: opacity .15s ease, background-color .15s ease;
+}
+.site-nav a:hover,
+.site-nav a:focus-visible{
+  opacity: 1;
+  background: rgba(255,255,255,.08);
+  outline: none;
+}
+.site-nav a.is-active{
+  background: rgba(255,255,255,.12);
+}
+
+/* 小画面：余白とサイズ微調整 */
+@media (max-width: 720px){
+  .site-header__inner{ padding: 10px 12px; gap: 12px; }
+  .site-nav{ gap: 10px; }
+}
+
+/* アクセシビリティ */
+@media (prefers-reduced-motion: reduce){
+  .site-nav a{ transition: none; }
+}
+
+/* モバイル専用メニュー開閉（拡張CSS） */
+.nav-toggle { display: none; }
+
+@media (max-width: 900px) {
+  /* ヘッダーを相対配置にして右上へ絶対配置 */
+  header.nav {
+    position: sticky;  /* 既存と整合 */
+    z-index: 10;
+    padding-right: 56px; /* 右上ボタンのための余白 */
+  }
+
+  .nav-toggle {
+    display: inline-block;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 21;
+
+    padding: 6px 10px;
+    font-size: 18px;
+    color: var(--fg);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* ▼ モバイルでは通常の横並びナビを隠す */
+  header.nav nav {
+    position: absolute;
+    top: 56px;          /* ヘッダー直下 */
+    right: 12px;
+    display: none !important;   /* ←重要：PC用表示を抑止 */
+    flex-direction: column;
+    min-width: 200px;
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* 開いた時だけ表示 */
+  header.nav.menu-open nav { display: flex !important; }
+
+  header.nav nav a {
+    display: block;
+    padding: 12px 14px;
+    margin: 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: 16px;
+  }
+  header.nav nav a:last-child { border-bottom: none; }
+
+  /* 開いている時のボタン強調（任意） */
+  header.nav.menu-open .nav-toggle {
+    background: rgba(255,255,255,.08);
+  }
+}
