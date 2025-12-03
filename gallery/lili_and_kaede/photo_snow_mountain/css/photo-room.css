@@ -1,0 +1,397 @@
+/* ===== Base ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+:root {
+  /* 右端との余白（pxで調整） */
+  --bgm-right-space: 10px;
+
+  /* sceneブロックとBGMブロックの間隔 */
+  --bgm-inner-gap: 6px;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Yu Gothic", sans-serif;
+  background: linear-gradient(to top, #31466e, #0c1525);
+  color: #f8fafc;
+}
+
+/* ===== Header ===== */
+.room-header {
+  /*position: sticky;
+  top: 0;*/
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px;
+  /*background: linear-gradient(to left, #868a8b, #2d405f);
+  border-bottom: 1px solid rgba(189, 189, 189, 0.1);*/
+}
+
+.room-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.site-title {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.room-title h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.room-title p {
+  margin: 2px 0 0;
+  font-size: 16px;
+  
+}
+
+  /* BGM周りを横並び＆距離を詰める */
+.room-header-right {
+  margin-left: auto;                         /* 左側から押し出して右寄せ */
+  margin-right: var(--bgm-right-space);      /* 右端との距離を変数で制御 */
+  display: flex;
+  align-items: center;
+  gap: var(--bgm-inner-gap);                /* scene と BGM の間隔を変数で制御 */
+}
+
+.room-header-right .slide-control {
+  margin-right: var(--bgm-right-space);   /* ← ここで距離を調整 */
+}
+  /* ラベルの位置＆フォント微調整 */
+  .bgm-file-label {
+    font-size: 12px;
+    margin-left: 2px;
+    opacity: 0.85;
+    max-width: 140px;  /* スマホで長いタイトル対策 */
+  }
+
+
+
+.slide-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.slide-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+  display: none;
+}
+
+.slide-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.slide-btn {
+  border: none;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: rgba(15, 23, 42, 0.6);
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+}
+
+.slide-btn:hover {
+  background: rgba(55, 65, 81, 0.9);
+  transform: translateY(-1px);
+}
+
+.slide-btn.is-active {
+  background: #eab308;
+  color: #111827;
+  font-weight: 600;
+}
+
+.slide-lamps {
+  display: flex;
+  margin-top: 6px; /* ← 上との距離をつくる */
+  margin-left: 4px; /* ← 上との距離をつくる */
+  gap: 4px;
+  justify-content: flex-start;
+  
+}
+
+.lamp {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.4);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9);
+  transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.lamp.is-active {
+  background: #fbbf24;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.9);
+  transform: scale(1.1);
+}
+
+.bgm-toggle {
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(15, 23, 42, 0.8);
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  background: rgb(16, 70, 25);
+}
+
+.bgm-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.bgm-toggle.is-playing {
+  background: #22c55e;
+  color: #022c22;
+}
+
+/* ===== Main / Gallery ===== */
+.room-main {
+  padding: 16px 16px 32px;
+}
+
+.photo-room {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-strip {
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-track {
+  display: flex;
+  transition: transform 0.45s ease;
+}
+
+/* each panel = width 100% (desktop slider) */
+.photo-panel {
+  min-width: 100%;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(180px, 1fr);
+  gap: 6px;
+}
+
+.photo-card {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #020617;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
+}
+
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.photo-card img:hover {
+  transform: scale(1.03);
+  opacity: 0.95;
+}
+
+/* ===== Lightbox ===== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.lightbox.hidden {
+  display: none;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+}
+
+.lightbox-inner {
+  position: absolute;
+  inset: 40px 16px 40px 16px;
+  max-width: 960px;
+  margin: auto;
+  background: #020617;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lightbox-img-wrapper {
+  flex: 1;
+  min-height: 0;  /* ← これも入れておくと安全 */
+}
+
+.lightbox-inner img {
+  width: 100%;
+  /* ここを追加 ↓↓↓ */
+  max-height: calc(100vh - 180px);
+  /* ↑ 180px が「上下の余白＋キャプション分」のイメージ */
+  border-radius: 12px;
+}
+
+#lightbox-caption {
+  margin: 2px 0 0;
+  font-size: 20px;  /* 好きなサイズ */
+  text-align: center;
+  line-height: 1.6;
+  color: #ffbf00;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: #e5e7eb;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .room-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .slide-control {
+    align-items: flex-start;   /* 親コンテナを左寄せに */
+  }
+@media (max-width: 720px) {
+
+
+  .room-header-right {
+    justify-content: flex-start;
+    margin-right: var(--header-right-space); 
+    margin-left: 0;
+    margin-right: 0;
+  }
+  /* 必要ならここでサイズだけ調整 */
+  .bgm-toggle {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+}
+
+
+  .panel-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(150px, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .room-main {
+    padding: 12px 8px 24px;
+  }
+
+  .gallery-strip {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .gallery-track {
+    gap: 8px;
+  }
+
+  .photo-panel {
+    min-width: 100%;
+    scroll-snap-align: start;
+  }
+
+  .panel-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(140px, 1fr);
+  }
+
+  .lightbox-inner {
+    inset: 32px 6px 32px 6px;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+  }
+
+  
+  .room-title h1 {
+    font-size: 16px;
+  }
+
+  .room-title p {
+    font-size: 11px;
+  }
+
+
+
+  
+}
+.room-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 16px 32px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+#lightbox-caption {
+  white-space: pre-line;
+}
+
+/* ==== BGM ファイル名ラベル ==== */
+.bgm-file-label {
+  font-size: 12px;
+  color: #fde68a;           /* 少し目立つ黄色 */
+  opacity: 0.7;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 再生中はラベルも少し強調 */
+.bgm-toggle.is-playing + .bgm-file-label {
+  opacity: 1;
+  color: #fbbf24;
+}

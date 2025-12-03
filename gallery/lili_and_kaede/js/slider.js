@@ -19,6 +19,13 @@ const slides = [
     title: "Lili & Kaede — Halloween Collection (Single Scene)",
     caption: "A dedicated room featuring single-scene Halloween illustrations of Lili and Kaede, arranged to preserve the atmosphere of the night."
   },
+  {
+    src: "./thumbnail/kv03.webp",
+    thumb: "./thumbnail/kv03.webp",
+    href: "./photo_snow_mountain/index.html",
+    title: "Lili & Kaede – Snow Mountain Photo Scene",
+    caption: "High-energy photo gallery of Lili and Kaede’s snow-mountain adventures and memories."
+  },
 ];
 
 
