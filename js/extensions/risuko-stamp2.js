@@ -49,18 +49,25 @@ function applyByIndex2(i){
 
 applyByIndex2(currentIndex2);
 
-// クリック（ボタン）でランダム切替
-btn2.addEventListener("click", () => {
+// ランダムにスタンプ2を切り替える共通関数
+function randomChangeStamp2() {
   let r = Math.floor(Math.random() * stampNames2.length);
   if (r === currentIndex2) r = (r + 1) % stampNames2.length;
   currentIndex2 = r;
   applyByIndex2(currentIndex2);
 
-  // GAイベント名も分けたい場合
+  // GAを分けたい場合
   // if (window.gtag) gtag("event", "risuko2_click", { value: currentIndex2 });
+}
+
+// 枠（画像・テキスト）クリックで絵だけ変更
+wrap2.addEventListener("click", (e) => {
+  if (e.target.id === "risuko-stamp-btn-2") return;
+  randomChangeStamp2();
 });
 
-// 画像自体のクリックでも切替（ボタン以外のクリックで反応）
-wrap2.addEventListener("click", (e) => {
-  if (e.target.id !== "risuko-stamp-btn-2") btn2.click();
+// ボタンクリックは goods へ移動
+btn2.addEventListener("click", (e) => {
+  e.stopPropagation();
+  window.location.href = "";
 });

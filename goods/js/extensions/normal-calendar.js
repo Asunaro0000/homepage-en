@@ -6,15 +6,11 @@ const NORMAL_CALENDAR_IMAGES = {
   2:"assets/normal-calendar/02.png",
   3:"assets/normal-calendar/03.png",
   4:"assets/normal-calendar/04.png",
-  5:"assets/normal-calendar/05.png",
-  6:"assets/normal-calendar/06.png",
-  7:"assets/normal-calendar/07.png",
-  8:"assets/normal-calendar/08.png",
-  9:"assets/normal-calendar/09.png",
-  10:"assets/normal-calendar/10.png",
-  11:"assets/normal-calendar/11.png",
-  12:"assets/normal-calendar/12.png",
+  // 必要分だけ追加してOK（数は自動で反映される）
 };
+
+// 画像数を自動で取得
+const NORMAL_CALENDAR_COUNT = Object.keys(NORMAL_CALENDAR_IMAGES).length;
 
 let normalCalendarMonth = 1;
 
@@ -48,12 +44,14 @@ function setupNormalCalendarNav() {
   if (!prev || !next) return;
 
   prev.addEventListener("click", () => {
-    normalCalendarMonth = normalCalendarMonth === 1 ? 12 : normalCalendarMonth - 1;
+    normalCalendarMonth =
+      normalCalendarMonth === 1 ? NORMAL_CALENDAR_COUNT : normalCalendarMonth - 1;
     updateNormalCalendar(normalCalendarMonth, true);
   });
 
   next.addEventListener("click", () => {
-    normalCalendarMonth = normalCalendarMonth === 12 ? 1 : normalCalendarMonth + 1;
+    normalCalendarMonth =
+      normalCalendarMonth === NORMAL_CALENDAR_COUNT ? 1 : normalCalendarMonth + 1;
     updateNormalCalendar(normalCalendarMonth, true);
   });
 }

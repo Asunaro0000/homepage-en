@@ -234,3 +234,14 @@
 .is-hidden {
   display: none !important;
 }
+.goods-link {
+  margin-top: 4px;
+  padding: 8px 14px;
+  font: 600 16px/1 system-ui, "Noto Sans JP", sans-serif;
+  color: #0d0f10;
+  background: #6fd5e3;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}

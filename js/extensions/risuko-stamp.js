@@ -6,7 +6,7 @@ const STAMP_PATH = "./assets/stamps/";
 
 const stampNames = [
   "On my way!", "Morning!", "Sorry!", "So happy!", "Cant stop!", "Sleepy...", 
-  "Lets play!", "Feeling good!", "Sigh...", "Perfect!", "Huh?", "See you!", 
+  "Lets play!", "Feeling good!", "Sigh...", "Perfect!", "Huh", "See you!", 
   "I cant anymore...", "Geez!", "No idea!", "Good job today!"
 ];
 // 要素取得
@@ -42,18 +42,23 @@ function applyByIndex(i){
 applyByIndex(currentIndex);
 
 // クリック（ボタン）でランダム切替
-btn.addEventListener("click", () => {
+function randomChangeStamp() {
   let r = Math.floor(Math.random() * stampNames.length);
   if (r === currentIndex) r = (r + 1) % stampNames.length;
   currentIndex = r;
   applyByIndex(currentIndex);
 
-  // （任意）GAにイベント送信する場合はコメントアウトを外す
+  // GAにイベント送信したい場合
   // if (window.gtag) gtag("event", "risuko_click", { value: currentIndex });
-});
+}
 
-// 画像自体のクリックでも切替したい場合は下を有効化
+
 wrap.addEventListener("click", (e) => {
-  if (e.target.id !== "risuko-stamp-btn") btn.click();
+  // ボタン自体を押した時は何もしない（下の handler に任せる）
+  if (e.target.id === "risuko-stamp-btn") return;
+  randomChangeStamp();
 });
 
+btn.addEventListener("click", () => {
+  window.location.href = "https://store.line.me/stickershop/product/31871806/ja";
+});

@@ -75,6 +75,8 @@
       <a href="contact/">Contact</a>
       <a href="link/">Link</a>
       <a href="sitemap/">Sitemap</a>
+      <a href="goods/">Goods</a>
+
       <a href="https://asunaro0000.github.io/asunaro0000.homepage/">🌐 JP</a>
     </nav>
   </header>
@@ -99,29 +101,45 @@
         <div class="risuko-wrap">
           <div id="risuko-dynamic" aria-live="polite">
 
-            <!-- A mode -->
+            <!-- A mode (calendar) -->
+            <div id="risuko-calendar" class="risuko-stamp is-hidden" aria-hidden="true">
+              <img id="risuko-calendar-img" src="" alt="Risuko calendar">
+              <p id="risuko-calendar-text" class="risuko-caption"></p>
+              <button id="risuko-calendar-btn" class="risuko-btn" type="button">Go to shop</button>
+            </div>
+
+            <!-- B mode (stamp) -->
             <div id="risuko-stamp" class="risuko-stamp" aria-hidden="false">
               <img id="risuko-stamp-img" src="" alt="Risuko of the day">
               <p id="risuko-stamp-text" class="risuko-caption"></p>
-              <button id="risuko-stamp-btn" class="risuko-btn" type="button">tap to change</button>
+              <button id="risuko-stamp-btn" class="risuko-btn" type="button">Go to shop</button>
             </div>
 
-            <!-- B mode -->
-            <div id="risuko-stamp-2" class="risuko-stamp is-hidden" aria-hidden="true">
+            <!-- C mode (stamp2) -->
+            <!--<div id="risuko-stamp-2" class="risuko-stamp is-hidden" aria-hidden="true">
               <img id="risuko-stamp-img-2" src="" alt="Risuko alternate">
               <p id="risuko-stamp-text-2" class="risuko-caption"></p>
-              <button id="risuko-stamp-btn-2" class="risuko-btn" type="button">tap to change</button>
-            </div>
+              <button id="risuko-stamp-btn-2" class="risuko-btn" type="button">Go to goods</button>
+            </div>-->
+
+
           </div>
 
           <!-- Mode switch controls -->
           <div class="controls" style="display:flex;gap:12px;justify-content:center;margin-top:8px">
-            <button id="prevMode" class="ctrl" type="button" aria-label="Previous" style="width:34px;height:34px;border:none;border-radius:8px;background:#ffd86a;color:#333;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.35);">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            <button id="prevMode" class="ctrl" type="button" aria-label="Previous"
+              style="width:34px;height:34px;border:none;border-radius:8px;background:#ffd86a;color:#333;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.35);">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+              </svg>
             </button>
-            <button id="nextMode" class="ctrl" type="button" aria-label="Next" style="width:34px;height:34px;border:none;border-radius:8px;background:#ffd86a;color:#333;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.35);">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+            <button id="nextMode" class="ctrl" type="button" aria-label="Next"
+              style="width:34px;height:34px;border:none;border-radius:8px;background:#ffd86a;color:#333;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.35);">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
+              </svg>
             </button>
+            <a id="risuko-stamp-link" class="goods-link" href="./goods/">Goods Room</a>
           </div>
         </div>
       </div>
@@ -221,12 +239,13 @@
     <section class="news">
       <h2>News</h2>
       <ul>
+        <li><strong>2025-12-03:</strong> Started selling "Risuko Calendar 2026" on BOOTH 🐿️</li>
         <li><strong>2025-12-03:</strong> Released the "Lili and Kaede’s Snow-Mountain Climb” Photo Room. </li>  
         <li><strong>2025-11-24:</strong> Released the “Seven-Day Rotating Wall Gallery”. The mural changes with each day of the week. </li>  
         <li><strong>2025-11-19:</strong> Released “Forest Activity Room”, the background art archive of <em>Renewal of the Forest Covenant</em>.</li>
-        <li><strong>2025-11-19:</strong> Published “Spirit Forest” from <em>Renewal of the Forest Covenant</em>.</li>
+     <!--    <li><strong>2025-11-19:</strong> Published “Spirit Forest” from <em>Renewal of the Forest Covenant</em>.</li>
         <li><strong>2025-11-18:</strong> Added site map and top banner.</li>
-   <!-- <li><strong>2025-11-18:</strong> Released Lili & Kaede “Halloween Panorama Gallery”.</li>
+   <li><strong>2025-11-18:</strong> Released Lili & Kaede “Halloween Panorama Gallery”.</li>
         <li><strong>2025-11-18:</strong> Released Risuko “Panorama Gallery”.</li>
         <li><strong>2025-11-14:</strong> Released “Shiori no Mori”, background art from <em>Renewal of the Forest Covenant</em>.</li>-->
       </ul>
@@ -241,6 +260,7 @@
   <!-- ▼ Scripts -->
   <script type="module" src="./js/extensions/nav-toggle.js"></script>
   <script src="./js/extensions/risuko-stamp2.js" defer></script>
+  <script src="./js/extensions/risuko-calender.js" defer></script> 
   <script src="./js/extensions/risuko-stamp.js" defer></script>
   <script src="./js/extensions/risuko-stamp-toggle.js" defer></script>
   <script src="./js/extensions/risuko-preload.js" defer></script>

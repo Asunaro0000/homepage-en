@@ -57,7 +57,7 @@
 
 /* ----------------------------------
    Calendar "準備中" Overlay
----------------------------------- */
+---------------------------------- 
 .pending {
   position: relative;
   filter: brightness(.6);
@@ -78,29 +78,29 @@
   padding: 8px 22px;
   border-radius: 6px;
   backdrop-filter: blur(3px);
-}
+}*/
 
 
 /* mobile微調整 */
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .pending::after {
     font-size: 16px;
     padding: 6px 18px;
   }
-}
+}*/
 
 
 /* Risuko Calendar - 準備中表示 */
-#risuko-calendar {
+/*#risuko-calendar {
   position: relative;
 }
 
 #risuko-calendar img {
   filter: brightness(0.55);
   pointer-events: none; /*クリック無効化したければ残す、不要なら消してOK*/
-}
+/*}*/
 
-#risuko-calendar::before {
+/*#risuko-calendar::before {
   content: "準備中";
   position: absolute;
   top: 50%;
@@ -114,4 +114,4 @@
   border-radius: 6px;
   backdrop-filter: blur(4px);
   z-index: 5;
-}
+}*/

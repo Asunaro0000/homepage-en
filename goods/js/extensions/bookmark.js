@@ -17,9 +17,9 @@
         "./assets/bookmarks/set1_2.webp",
         "./assets/bookmarks/set1_3.webp",
       ],
-      caption: "森と冬の空気を閉じ込めた、静かな色合いの栞です。",
+      caption: "A bookmark set with quiet colors that capture the forest and winter atmosphere.",
       href: "https://booth.pm",         // 実際のBOOTH URLに差し替え
-      btnLabel: "▶ セットAを見る"
+      btnLabel: "▶ View Set B"
     },
     {
       images: [
@@ -29,7 +29,7 @@
       ],
       caption: "栞の背面デザインです。",
       href: "https://booth.pm",
-      btnLabel: "▶ セットAを見る"
+      btnLabel: "▶ View Set A"
 
     },
 
