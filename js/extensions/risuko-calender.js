@@ -3,7 +3,7 @@ const CAL_PATH = "./assets/goods_calendar/";
 
 // カレンダー用のファイル名（拡張子なし）
 const calendarNames = [
-  "Cover", "January", "February", "March", "April",
+  "January", "February", "March", "April","Cover",
   // 必要なら "May"〜"December" をここに追加
 ];
 
